@@ -13,13 +13,13 @@ tyyppistä peliä. Esim. yksinpeli, moninpeli, FPS yms.
 Käyttäjät voivat myös merkitä pelejä ja arvosteluita asiattomiksi, jolloin
 adminin on mahdollista poistaa merkitty peli tai poistaa merkintä.
 
-Toimintoja:
-	-Kirjautuminen
-	-Arvostelun teko pelille
-	-Pelin lisääminen
-	-Pelien listaus eri ehtojen mukaan
-	-Pelin arvosteluiden listaus
-	-Tunnisteen lisäys pelille
-	-Pelien ja arvosteluiden asiattomaksi merkitseminen
-	-Asiattoman sisällön poistaminen (admin)
+Toimintoja:  
+	-Kirjautuminen  
+	-Arvostelun teko pelille  
+	-Pelin lisääminen  
+	-Pelien listaus eri ehtojen mukaan  
+	-Pelin arvosteluiden listaus  
+	-Tunnisteen lisäys pelille  
+	-Pelien ja arvosteluiden asiattomaksi merkitseminen  
+	-Asiattoman sisällön poistaminen (admin)  
 	
