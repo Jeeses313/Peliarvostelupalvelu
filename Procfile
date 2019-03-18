@@ -1,1 +1,1 @@
-web: gunicorn --preload --workers 1 Peliarvostelupalvelu:app
+web: gunicorn --preload --workers 1 peliarvostelupalvelu:app
