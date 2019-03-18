@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('games_create') }}">
+  <p>Pelin nimi</p>
+  <input type="text" name="name"/>
+  <p>Pelin tunnus<p>
+  <input type="text" name="tag"/>
+  <p>Pelin julkaisupäivä(YYYY-MM-DD)</p>
+  <input type="datetime" name="publication"/>
+  <input type="submit" value="Add a new game"/>
+</form>
+{% endblock %}
