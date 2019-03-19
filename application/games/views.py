@@ -24,11 +24,13 @@ def games_form():
 @app.route("/games/", methods=["POST"])
 def games_create():
     name = request.form.get("name")
-    tag = request.form.get("tag")
-    year, month, day = map(int, request.form.get("publication").split('-'))
-    publication = datetime.date(year, month, day)
-    game = Game(name, tag, publication)
-    db.session().add(game)
-    db.session().commit()
-        
-    return redirect(url_for("games_index"))
+    exists = Game.query.filter_by(name=name).first()
+    if(exists is None):	
+        tag = request.form.get("tag")
+        year, month, day = map(int, request.form.get("publication").split('-'))
+        publication = datetime.date(year, month, day)
+        game = Game(name, tag, publication)
+        db.session().add(game)
+        db.session().commit()
+        return redirect(url_for("games_index"))
+    return render_template("games/new.html")        

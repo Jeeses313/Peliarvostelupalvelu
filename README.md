@@ -1,6 +1,6 @@
-Peliarvostelupalvelu 
+# Peliarvostelupalvelu 
 
-Käyttäjät voivat tehdä arvosteluita tietokannassa oleville peleille 
+Palvelu, jolla käyttäjät voivat tehdä arvosteluita tietokannassa oleville peleille 
 ja uusille peleille. Arvosteluun kuuluu arvosana asteikolla 0-5 
 ja selitys siitä, miksi on antanut tämän arvosanan. Käyttäjät voivat myös
 katsoa listaa peleistä ja etsiä haluamansa pelin, jolloin voi nähdä
@@ -23,3 +23,7 @@ Toimintoja:
 	-Pelien ja arvosteluiden asiattomaksi merkitseminen  
 	-Asiattoman sisällön poistaminen (admin)  
 	
+[User storyt](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/User storyt.txt)
+[Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu tietokantakaavio.jpg)
+
+[Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
