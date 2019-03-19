@@ -25,6 +25,6 @@ Toimintoja:
 	
 [User storyt](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/User%20storyt.md)
 
-[Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.jpg)
+[Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.png)
 
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
