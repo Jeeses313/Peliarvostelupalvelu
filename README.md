@@ -23,7 +23,7 @@ Toimintoja:
 	-Pelien ja arvosteluiden asiattomaksi merkitseminen  
 	-Asiattoman sisällön poistaminen (admin)  
 	
-[User storyt](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/User storyt.txt)
-[Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu tietokantakaavio.jpg)
+[User storyt](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/User%20storyt.txt)
+[Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.jpg)
 
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
