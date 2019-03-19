@@ -17,6 +17,7 @@ def games_remove(game_id):
   
     return redirect(url_for("games_index"))
 
+
 @app.route("/games/new/")
 def games_form():
     return render_template("games/new.html")
