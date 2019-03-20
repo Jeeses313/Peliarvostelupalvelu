@@ -10,12 +10,16 @@ def games_index():
 
 
 @app.route("/games/<game_id>/", methods=["POST"])
-def games_remove(game_id):
+def games_removeOrMark(game_id):
     game = Game.query.get(game_id)
-    db.session().delete(game)
+    if('mark' in request.form):
+        game.flag = True
+    else:
+        db.session().delete(game)
     db.session().commit()
   
     return redirect(url_for("games_index"))
+
 
 
 @app.route("/games/new/")

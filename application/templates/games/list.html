@@ -7,6 +7,7 @@
       <th>Tunnus</th>
 	  <th>Julkaisupäivä</th>
 	  <th></th>
+
     </tr>
     {% for game in games %}
     <tr>
@@ -14,10 +15,11 @@
       <td>{{ game.tag }}</td>
 	  <td>{{ "{}.{}.{}".format(game.publication.day, game.publication.month, game.publication.year) }}</td>
       <td>
-	    <form method="POST" action="{{ url_for('games_remove', game_id=game.id) }}">
-	      <input type="submit" value="Poista"/>
-	    </form>
+	    <form method="POST" action="{{ url_for('games_removeOrMark', game_id=game.id) }}">
+	      <input type="submit" name="mark" value="Merkitse" />
+		  <input type="submit" name="remove" value="Poista" />
 	  </td>
+
 	</tr>
     {% endfor %}
   </table>
