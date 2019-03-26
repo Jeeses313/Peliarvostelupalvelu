@@ -5,8 +5,14 @@ from application import views
 
 from flask_sqlalchemy import SQLAlchemy
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///games.db"
-app.config["SQLALCHEMY_ECHO"] = True
+import os
+
+if os.environ.get("HEROKU"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///games.db"    
+    app.config["SQLALCHEMY_ECHO"] = True
+
 db = SQLAlchemy(app)
 
 from application.games import views
@@ -30,7 +36,10 @@ login_manager.login_message = "Kirjaudu käyttääksesi tätä toimintoa."
 def load_user(user_id):
     return User.query.get(user_id)
 
-db.create_all()
+try: 
+    db.create_all()
+except:
+    pass
 
 from application.auth.models import User
 exists = User.query.filter_by(username="admin").first()
