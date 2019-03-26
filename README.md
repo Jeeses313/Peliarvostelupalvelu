@@ -28,3 +28,5 @@ Toimintoja:
 [Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.png)
 
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
+
+Admin käyttäjän käyttäjätunnus: "admin" ja salasana: "admin". Tavalliseksi käyttäjäksi voi rekisteröityä kirjautumissivulta.

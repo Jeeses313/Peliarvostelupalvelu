@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('games_createOrUpdate') }}">
-  <p> Uuden pelin lisäys </p>
-  <tr>
+<form method="POST" action="{{ url_for('games_createOrUpdate')}}">
+  <p> Pelin tietojen muokkaus </p>
+  {{ form.oldName }}
   {{ form.name.label}}
   {{ form.name }}
   {% for error in form.name.errors %}
@@ -22,6 +22,6 @@
     {{ error }}
   {% endfor %}
   </br>
-  <input type="submit" name="create" value="Lisää peli"/>
+  <input type="submit" name="edit" value="Muokkaa"/>
 </form>
 {% endblock %}
