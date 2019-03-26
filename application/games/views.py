@@ -8,7 +8,21 @@ from application.games.forms import GameForm, GameEditForm
 
 @app.route("/games", methods=["GET"])
 def games_index():
-    return render_template("games/list.html", games = Game.query.all())
+    return render_template("games/list.html", games = Game.query.order_by(Game.name).all())
+
+@app.route("/games/publicationOrder", methods=["GET"])
+def games_publicationList():
+    return render_template("games/list.html", games = Game.query.order_by(Game.publication).all())
+
+@app.route("/games/tagOrder", methods=["GET"])
+def games_tagList():
+    return render_template("games/list.html", games = Game.query.order_by(Game.tag).all())
+
+
+@app.route("/games/flagged", methods=["GET"])
+@login_required
+def games_flaggedList():
+    return render_template("games/list.html", games = Game.query.filter_by(flag=True).order_by(Game.name))
 
 
 @app.route("/games/<game_id>/", methods=["POST"])

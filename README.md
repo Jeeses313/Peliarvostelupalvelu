@@ -30,3 +30,4 @@ Toimintoja:
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
 
 Admin käyttäjän käyttäjätunnus: "admin" ja salasana: "admin". Tavalliseksi käyttäjäksi voi rekisteröityä kirjautumissivulta.
+Admin voi vaihtaa nimeään ja salasanaansa, mutta sovelluksen käynnistyessä, jos "admin" nimistä käyttäjää ei löydy, tehdään sellainen.

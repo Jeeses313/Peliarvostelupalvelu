@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 from application import app, db
 from application.auth.models import User
-from application.auth.forms import LoginForm, RegisterForm
+from application.auth.forms import LoginForm, RegisterForm, UserEditForm
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -30,20 +30,57 @@ def auth_logout():
 def auth_form():
     return render_template("auth/new.html", form = RegisterForm())
 
+@app.route("/auth/<user_id>/")
+@login_required
+def auth_profile(user_id):
+    return render_template("auth/profile.html", user = User.query.get(user_id))
+
+@app.route("/auth/<user_id>/", methods=["POST"])
+@login_required
+def auth_edit(user_id):
+    user = User.query.get(user_id)
+    
+    form = UserEditForm()
+    form.oldUsername.data = user.username
+    form.username.data = user.username
+    form.password.data = user.password
+    form.passwordSec.data = user.password
+    return render_template("auth/edit.html", form = form, user = user) 
+
+
    
 @app.route("/auth/", methods=["POST"])
-def auth_register():
-    
-    form = RegisterForm(request.form)
+def auth_registerOrUpdate():
+    if('create' in request.form):
+        form = RegisterForm(request.form)
 
-    if not form.validate():
-        return render_template("auth/new.html", form = form)
-    username = form.username.data    
-    password = form.password.data
-    user = User(username, password, False)
-    db.session().add(user)
-    db.session().commit()  
+        if not form.validate():
+            return render_template("auth/new.html", form = form)
+        username = form.username.data    
+        password = form.password.data
+        user = User(username, password, False)
+        db.session().add(user)
+        db.session().commit()  
     
-    login_user(user)
-    
+        login_user(user)
+        
+        
+        
+    elif('edit' in request.form):
+        form = UserEditForm(request.form)
+
+        if not form.validate():
+            return render_template("auth/edit.html", form = form)
+            
+        oldUsername = form.oldUsername.data
+        user = User.query.filter_by(username=oldUsername).first()
+        
+        user.username = form.username.data
+        user.password = form.password.data
+
+        db.session().commit()
+        
+        
+        
+        
     return redirect(url_for("games_index"))

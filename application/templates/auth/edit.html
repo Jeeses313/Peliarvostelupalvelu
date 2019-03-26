@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('auth_registerOrUpdate') }}">
-  <p> Rekisteröityminen </p>
-  <tr>
+<form method="POST" action="{{ url_for('auth_registerOrUpdate')}}">
+  <p> Käyttäjän tietojen muokkaus </p>
+  {{ form.oldUsername }}
   {{ form.username.label}}
   {{ form.username }}
   {% for error in form.username.errors %}
@@ -12,6 +12,7 @@
   </br>
   {{ form.password.label }}
   {{ form.password }}
+
   </br>
   {{ form.passwordSec.label }}
   {{ form.passwordSec }}
@@ -19,6 +20,6 @@
     {{ error }}
   {% endfor %}
   </br>
-  <input type="submit" name="create" value="Rekisteröidy"/>
+  <input type="submit" name="edit" value="Muokkaa"/>
 </form>
 {% endblock %}

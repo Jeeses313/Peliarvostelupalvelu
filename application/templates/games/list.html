@@ -1,11 +1,20 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+	{% if current_user.admin %}
+	    <a href="{{ url_for('games_index') }}">Kaikki pelit</a>
+	    <a href="{{ url_for('games_flaggedList') }}">Virheellisiksi merkityt</a>
+	{% endif %}
+		
+	
+	  
+		  
   <table>
     <tr>
-      <th>Nimi</th>
-      <th>Tunnus</th>
-	  <th>Julkaisupäivä</th>
+      <th><a href="{{ url_for('games_index') }}">Nimi</a></th>
+      <th><a href="{{ url_for('games_tagList') }}">Tunnus</a></th>
+	  <th><a href="{{ url_for('games_publicationList') }}">Julkaisupäivä</a></th>
 	  <th></th>
 
     </tr>
@@ -21,7 +30,7 @@
 			<input type="submit" name="edit" value="Muokkaa" />
 			<input type="submit" name="remove" value="Poista" />
 	      {% else %}
-			<input type="submit" name="mark" value="Merkitse" /> 
+			<input type="submit" name="mark" value="Merkitse virheelliseksi" /> 
 	      {% endif %}
 	    {% endif %}
 	  </form> 
