@@ -3,9 +3,11 @@
 {% block body %}
 	<p>Käyttäjänimi: {{ user.username }} </p>
 	{% if current_user.id==user.id  %}
-	    <form method="POST" action="{{ url_for('auth_edit', user_id=user.id) }}">
-			<input type="submit" name="edit" value="Muokkaa tietoja" />
-		</form>
+		{% if current_user.username!="admin" %} 
+			<form method="POST" action="{{ url_for('auth_edit', user_id=user.id) }}">
+				<input type="submit" name="edit" value="Muokkaa tietoja" />
+			</form>
+		{% endif %}
 	{% endif %}
 	<p>Arvostelut:</p>
 	  
