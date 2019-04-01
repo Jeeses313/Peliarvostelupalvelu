@@ -3,6 +3,7 @@ from flask_login import login_required
 import datetime
 from flask import redirect, render_template, request, url_for
 from application.games.models import Game
+from application.reviews.models import Review
 from application.games.forms import GameForm, GameEditForm
 
 
@@ -32,6 +33,9 @@ def games_removeOrMarkOrEdit(game_id):
     if('mark' in request.form):
         game.flag = True
     elif('remove' in request.form):
+        reviews = Review.query.filter_by(game_id=game.id)
+        for review in reviews:
+            db.session().delete(review)
         db.session().delete(game)
     elif('edit' in request.form):
         form = GameEditForm()

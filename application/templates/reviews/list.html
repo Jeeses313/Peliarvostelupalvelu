@@ -1,31 +1,25 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<p>Käyttäjänimi: {{ user.username }} </p>
-	{% if current_user.id==user.id  %}
-		{% if current_user.username!="admin" %} 
-			<form method="POST" action="{{ url_for('auth_edit', user_id=user.id) }}">
-				<input type="submit" name="edit" value="Muokkaa tietoja" />
-			</form>
-		{% endif %}
-	{% endif %}
-	<p>Arvostelut:</p>
-	<table style="width:60ch">
 
+			  
+  <p>Arvostelut pelille {{ game.name }} </p> 
+  <table style="width:60ch">
     <tr>
-      <th>Peli</th>
-      <th>Arvosana</th>
+      <th>Arvostelija</th>
+      <th><a href="{{ url_for('reviews_gradeOrder', game_id=game.id  ) }}">Arvosana</a></th>
 	  <th>Arvostelu</th>
 	  <th></th>
 
     </tr>
     {% for review in reviews %}
     <tr>
-      <td><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></td>
+      <td><a href="{{ url_for('auth_profile', user_id=review.user.id  ) }}">{{ review.user.username }}</a></td>
       <td>{{ review.grade }} </td>
 	  <td>{{ review.text }}</td>
       <td>
-      <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
+	  
+	  <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
 		{% if current_user.is_authenticated %}
 	      {% if current_user.admin %}
 		    <td>
@@ -47,18 +41,12 @@
 				<input type="submit" name="mark" value="Merkitse asiattomaksi" /> 
 			  </td>
 			{% endif %}
-	      {% endif %}
+		  {% endif %}
 	    {% endif %}
 	  </form> 
 	  </td>
-	  
-	  
-	  
-      
-	  
 
 	</tr>
     {% endfor %}
-  </table>	  
-  
+  </table>
 {% endblock %}

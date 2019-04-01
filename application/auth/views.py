@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, login_required
 
 from application import app, db
 from application.auth.models import User
+from application.reviews.models import Review
 from application.auth.forms import LoginForm, RegisterForm, UserEditForm
 
 @app.route("/auth/login", methods = ["GET", "POST"])
@@ -31,9 +32,8 @@ def auth_form():
     return render_template("auth/new.html", form = RegisterForm())
 
 @app.route("/auth/<user_id>/")
-@login_required
 def auth_profile(user_id):
-    return render_template("auth/profile.html", user = User.query.get(user_id))
+    return render_template("auth/profile.html", user = User.query.get(user_id), reviews = Review.query.filter_by(user_id=user_id))
 
 @app.route("/auth/<user_id>/", methods=["POST"])
 @login_required
