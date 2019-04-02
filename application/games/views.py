@@ -5,26 +5,68 @@ from flask import redirect, render_template, request, url_for
 from application.games.models import Game
 from application.reviews.models import Review
 from application.games.forms import GameForm, GameEditForm
-
+from sqlalchemy.sql import text
 
 @app.route("/games", methods=["GET"])
 def games_index():
-    return render_template("games/list.html", games = Game.query.order_by(Game.name).all())
+    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.name")
+    res = db.engine.execute(stmt)
+    games = []
+
+    for row in res:
+        publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
+        publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
+        average = str(row[5])
+        if("None" in average):
+            average = "0"
+        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
+    return render_template("games/list.html", games = games)
 
 @app.route("/games/publicationOrder", methods=["GET"])
 def games_publicationList():
-    return render_template("games/list.html", games = Game.query.order_by(Game.publication).all())
+    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.publication")
+    res = db.engine.execute(stmt)
+    games = []
+
+    for row in res:
+        publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
+        publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
+        average = str(row[5])
+        if("None" in average):
+            average = "0"
+        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
+    return render_template("games/list.html", games = games)
 
 @app.route("/games/tagOrder", methods=["GET"])
 def games_tagList():
-    return render_template("games/list.html", games = Game.query.order_by(Game.tag).all())
+    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.tag")
+    res = db.engine.execute(stmt)
+    games = []
 
+    for row in res:
+        publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
+        publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
+        average = str(row[5])
+        if("None" in average):
+            average = "0"
+        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
+    return render_template("games/list.html", games = games)
 
 @app.route("/games/flagged", methods=["GET"])
 @login_required
 def games_flaggedList():
-    return render_template("games/list.html", games = Game.query.filter_by(flag=True).order_by(Game.name))
+    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = 1 GROUP BY Game.id ORDER BY Game.name")
+    res = db.engine.execute(stmt)
+    games = []
 
+    for row in res:
+        publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
+        publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
+        average = str(row[5])
+        if("None" in average):
+            average = "0"
+        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
+    return render_template("games/list.html", games = games)
 
 @app.route("/games/<game_id>/", methods=["POST"])
 @login_required

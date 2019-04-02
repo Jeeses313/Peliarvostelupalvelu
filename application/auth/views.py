@@ -5,6 +5,7 @@ from application import app, db
 from application.auth.models import User
 from application.reviews.models import Review
 from application.auth.forms import LoginForm, RegisterForm, UserEditForm
+from sqlalchemy.sql import text
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -33,7 +34,12 @@ def auth_form():
 
 @app.route("/auth/<user_id>/")
 def auth_profile(user_id):
-    return render_template("auth/profile.html", user = User.query.get(user_id), reviews = Review.query.filter_by(user_id=user_id))
+    stmt = text("SELECT User.id, User.username, COUNT(Review.id) AS review_count FROM User LEFT JOIN Review ON User.id = Review.user_id WHERE User.id= :user_id GROUP BY User.id").params(user_id=user_id)
+    res = db.engine.execute(stmt)
+    users = []
+    for row in res:
+        users.append({"id":row[1], "username":row[1], "review_count":row[2]})
+    return render_template("auth/profile.html", users = users, reviews = Review.query.filter_by(user_id=user_id))
 
 @app.route("/auth/<user_id>/", methods=["POST"])
 @login_required

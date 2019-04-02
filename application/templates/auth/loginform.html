@@ -2,7 +2,7 @@
 
 {% block body %}
 {{ error }}
-<p>Kirjautuminen</p>
+<p><b>Kirjautuminen</b></p>
 <form method="POST" action="{{ url_for('auth_login') }}">
   {{ form.username.label }}
   {{ form.username }}

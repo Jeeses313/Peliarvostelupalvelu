@@ -1,64 +1,57 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<p>Käyttäjänimi: {{ user.username }} </p>
-	{% if current_user.id==user.id  %}
+	<p>Käyttäjänimi: {{ users[0].username }} </br>Arvosteluja: {{ users[0].review_count }} </p>
+	{% if current_user.id==users[0].id  %}
 		{% if current_user.username!="admin" %} 
-			<form method="POST" action="{{ url_for('auth_edit', user_id=user.id) }}">
+			<form method="POST" action="{{ url_for('auth_edit', user_id=users[0].id) }}">
 				<input type="submit" name="edit" value="Muokkaa tietoja" />
 			</form>
 		{% endif %}
 	{% endif %}
-	<p>Arvostelut:</p>
-	<table style="width:60ch">
-
-    <tr>
-      <th>Peli</th>
-      <th>Arvosana</th>
-	  <th>Arvostelu</th>
-	  <th></th>
-
-    </tr>
-    {% for review in reviews %}
-    <tr>
-      <td><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></td>
-      <td>{{ review.grade }} </td>
-	  <td>{{ review.text }}</td>
-      <td>
-      <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
-		{% if current_user.is_authenticated %}
-	      {% if current_user.admin %}
-		    <td>
-			<input type="submit" name="unmark" value="Merkitse asialliseksi" />
-			</td>
-			<td>
-			<input type="submit" name="remove" value="Poista" />
-	        </td>
-		  {% else %}
-		    {% if current_user.id == review.user_id %}
-			  <td>
-			  <input type="submit" name="edit" value="Muokkaa" />
-			  </td>
-			  <td>
-			  <input type="submit" name="remove" value="Poista" />
-	          </td>
-			{% else %}
-			  <td>
-				<input type="submit" name="mark" value="Merkitse asiattomaksi" /> 
-			  </td>
-			{% endif %}
+	<p>Arvostelut:</p>  
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 20%">Peli</th>
+        <th style="width: 10%">Arvosana</th>
+        <th style="width: 30%">Arvostelu</th>
+        <th style="width: 30%"></th>
+      </tr>
+    </thead>
+    <tbody>
+	  {% for review in reviews %}
+        <tr>
+          <td><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></td>
+          <td>{{ review.grade }}</td>
+          <td>{{ review.text }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
+		      {% if current_user.is_authenticated %}
+	            {% if current_user.admin %}
+		          <td>
+			        <input type="submit" name="unmark" value="Merkitse asialliseksi" />
+			      </td>
+			      <td>
+			        <input type="submit" name="remove" value="Poista" />
+	              </td>
+		        {% else %}
+		      {% if current_user.id == review.user_id %}
+			    <td>
+			      <input type="submit" name="edit" value="Muokkaa" />	
+                </td>
+                <td>				
+			      <input type="submit" name="remove" value="Poista" />
+	            </td>
+			  {% else %}
+			    <td>
+				  <input type="submit" name="mark" value="Merkitse asiattomaksi" /> 
+			    </td>
+			  {% endif %}
+	        {% endif %}
 	      {% endif %}
-	    {% endif %}
-	  </form> 
-	  </td>
-	  
-	  
-	  
-      
-	  
-
-	</tr>
-    {% endfor %}
-  </table>	  
-  
+        </tr>
+	  {% endfor %}	
+    </tbody>
+  </table>
 {% endblock %}
