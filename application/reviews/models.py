@@ -5,7 +5,7 @@ from application.games.models import Game
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     grade = db.Column(db.Integer, nullable=False)
     text = db.Column(db.String(300), nullable=False)
