@@ -74,10 +74,10 @@ def games_tagList():
 @login_required
 def games_flaggedList():
     stmt = ""
-    try:
-        stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = 1 GROUP BY Game.id ORDER BY Game.name")
-    except:
+    if os.environ.get("HEROKU"):
         stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = True GROUP BY Game.id ORDER BY Game.name")
+    else:
+        stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = 1 GROUP BY Game.id ORDER BY Game.name")   
     res = db.engine.execute(stmt)
     games = []
 
