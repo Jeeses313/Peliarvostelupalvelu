@@ -6,6 +6,7 @@ from application.games.models import Game
 from application.reviews.models import Review
 from application.games.forms import GameForm, GameEditForm
 from sqlalchemy.sql import text
+import os
 
 @app.route("/games", methods=["GET"])
 def games_index():
