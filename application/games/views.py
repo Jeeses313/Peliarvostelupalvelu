@@ -16,13 +16,12 @@ def games_index():
     for row in res:
         publication_date = ""
         publication = ""
-        try:
+        try:          
             publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
             publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except ValueError:
-            parts = row[3].split(" ")
-            smallerparts = parts[0].split("-")
-            publication = "{}.{}.{}".format(smallerparts[2], smallerparts[1], smallerparts[0])
+        except:
+            publication_date = row[3]
+            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
         average = str(row[5])
         if("None" in average):
             average = "0"
@@ -38,13 +37,12 @@ def games_publicationList():
     for row in res:
         publication_date = ""
         publication = ""
-        try:
+        try:          
             publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
             publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except ValueError:
-            parts = row[3].split(" ")
-            smallerparts = parts[0].split("-")
-            publication = "{}.{}.{}".format(smallerparts[2], smallerparts[1], smallerparts[0])
+        except:
+            publication_date = row[3]
+            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
         average = str(row[5])
         if("None" in average):
             average = "0"
@@ -60,13 +58,12 @@ def games_tagList():
     for row in res:
         publication_date = ""
         publication = ""
-        try:
+        try:          
             publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
             publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except ValueError:
-            parts = row[3].split(" ")
-            smallerparts = parts[0].split("-")
-            publication = "{}.{}.{}".format(smallerparts[2], smallerparts[1], smallerparts[0])
+        except:
+            publication_date = row[3]
+            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
         average = str(row[5])
         if("None" in average):
             average = "0"
@@ -83,13 +80,12 @@ def games_flaggedList():
     for row in res:
         publication_date = ""
         publication = ""
-        try:
+        try:          
             publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
             publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except ValueError:
-            parts = row[3].split(" ")
-            smallerparts = parts[0].split("-")
-            publication = "{}.{}.{}".format(smallerparts[2], smallerparts[1], smallerparts[0])
+        except:
+            publication_date = row[3]
+            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
         average = str(row[5])
         if("None" in average):
             average = "0"
