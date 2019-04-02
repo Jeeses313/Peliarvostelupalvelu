@@ -34,7 +34,7 @@ def auth_form():
 
 @app.route("/auth/<user_id>/")
 def auth_profile(user_id):
-    data=(user_id,)
+    data=(user_id)
     res = db.engine.execute("SELECT User.id, User.username, COUNT(Review.id) AS review_count FROM User LEFT JOIN Review ON User.id = Review.user_id WHERE User.id= %s GROUP BY User.id", data)
     users = []
     for row in res:
