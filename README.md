@@ -15,17 +15,17 @@ adminin on mahdollista poistaa merkitty peli tai poistaa merkintä.
 
 Toimintoja:  
 	-Kirjautuminen  
-	-Arvostelun teko pelille
-	-Arvostelun muokkaaminen
-	-Arvosteluiden listaus
-	-Arvosteluiden listauksen järjestäminen
-	-Pelin lisääminen
-	-Pelin arvosteluiden listaus
-	-Pelien listauksen järjestäminen
+	-Arvostelun teko pelille  
+	-Arvostelun muokkaaminen  
+	-Arvosteluiden listaus  
+	-Arvosteluiden listauksen järjestäminen  
+	-Pelin lisääminen  
+	-Pelin arvosteluiden listaus  
+	-Pelien listauksen järjestäminen  
 	-Tunnisteen lisäys pelille  
-	-Pelien ja arvosteluiden asiattomaksi merkitseminen  
-	-Asiattoman sisällön poistaminen (admin)
-	-Pelien tietojen muokkaaminen (admin)
+	-Pelien ja arvosteluiden asiattomaksi merkitseminen   
+	-Asiattoman sisällön poistaminen (admin)  
+	-Pelien tietojen muokkaaminen (admin)  
 	
 	
 	
