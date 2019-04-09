@@ -1,27 +1,30 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('reviews_createOrUpdate') }}">
-  <p> Arvostelu pelille {{ game.name }} </p>
-  <tr>
-  {{ form.game_id }}
+<main role="main" class="container">
+  <form method="POST" action="{{ url_for('reviews_createOrUpdate') }}">
+    <p> Arvostelu pelille {{ game.name }} </p>
+    <tr>
+    {{ form.game_id }}
   
-  {{ form.grade.label}}
-  {{ form.grade }}
-  {% for error in form.grade.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  {{ form.text.label }}
-  </br>
-  {{ form.text }}
-  {% for error in form.text.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  <input type="submit" name="create" value="Lisää arvostelu"/>
-  {% for error in form.game_id.errors %}
-    {{ error }}
-  {% endfor %}
-</form>
+    {{ form.grade.label}}
+    {{ form.grade }}
+    {% for error in form.grade.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    {{ form.text.label }}
+    </br>
+    {{ form.text }}
+    </br>
+    {% for error in form.text.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    <input type="submit" name="create" value="Lisää arvostelu"/>
+    {% for error in form.game_id.errors %}
+      {{ error }}
+    {% endfor %}
+  </form>
+</main>
 {% endblock %}

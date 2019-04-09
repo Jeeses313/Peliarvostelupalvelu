@@ -1,24 +1,26 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('auth_registerOrUpdate') }}">
-  <p> Rekisteröityminen </p>
-  <tr>
-  {{ form.username.label}}
-  {{ form.username }}
-  {% for error in form.username.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  {{ form.password.label }}
-  {{ form.password }}
-  </br>
-  {{ form.passwordSec.label }}
-  {{ form.passwordSec }}
-  {% for error in form.passwordSec.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  <input type="submit" name="create" value="Rekisteröidy"/>
-</form>
+<main role="main" class="container">
+  <form method="POST" action="{{ url_for('auth_registerOrUpdate') }}">
+    <p> Rekisteröityminen </p>
+    <tr>
+    {{ form.username.label}}
+    {{ form.username }}
+    {% for error in form.username.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    {{ form.password.label }}
+    {{ form.password }}
+    </br>
+    {{ form.passwordSec.label }}
+    {{ form.passwordSec }}
+    {% for error in form.passwordSec.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    <input type="submit" name="create" value="Rekisteröidy"/>
+  </form>
+</main>
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  <main role="main" class="container">
 	{% if current_user.is_authenticated %}
 		<a href="{{ url_for('games_form') }}">Lisää peli</a>
 	{% endif %}
@@ -8,36 +9,40 @@
 	    <a href="{{ url_for('games_index') }}">Kaikki pelit</a>
 	    <a href="{{ url_for('games_flaggedList') }}">Virheellisiksi merkityt</a>
 	{% endif %}
+  </main>
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 20%"><a href="{{ url_for('games_index') }}">Nimi</a></th>
-        <th style="width: 10%"><a href="{{ url_for('games_tagList') }}">Tunnus</a></th>
-        <th style="width: 20%"><a href="{{ url_for('games_publicationList') }}">Julkaisupäivä</a></th>
-        <th style="width: 10%">Arvosteluja</th>
-        <th style="width: 10%">Arvosteluiden keskiarvo</th>
-		<th style="width: 10%"></th>
+        <th style="width: 10%">Nimi<a href="{{ url_for('games_indexReverse') }}">&#x25B2 </a><a href="{{ url_for('games_index') }}">&#x25BC </a></th>
+        <th style="width: 10%">Tunnus<a href="{{ url_for('games_tagOrderReverse') }}">&#x25B2 </a><a href="{{ url_for('games_tagOrder') }}">&#x25BC </a></th>
+        <th style="width: 15%">Julkaisupäivä<a href="{{ url_for('games_publicationOrderReverse') }}">&#x25B2 </a><a href="{{ url_for('games_publicationOrder') }}">&#x25BC </a></th>
+        <th style="width: 10%">Arvosteluja<a href="{{ url_for('games_reviewCountOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('games_reviewCountOrderAsc') }}">&#x25BC </a></th>
+        <th style="width: 10%">Arvosteluiden keskiarvo<a href="{{ url_for('games_reviewAverageOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('games_reviewAverageOrderAsc') }}">&#x25BC </a></th>
       </tr>
     </thead>
     <tbody>
 	  {% for game in games %}
         <tr>
-          <td>{{ game.name }}</td>
-          <td>{{ game.tag }}</td>
+          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;">{{ game.name }}</div></td>
+          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;">{{ game.tag }}</div></td>
           <td>{{ game.publication }}</td>
           <td>{{ game.review_count }}</td>
           <td>{{ game.review_average }}</td>
+		  <td>
+	        <form method="POST" action="{{ url_for('reviews_index', game_id=game.id) }}">
+	        </form>
+	      </td>
 		  <td>
 	        <form method="POST" action="{{ url_for('reviews_index', game_id=game.id) }}">
 		      <input type="submit" name="review" value="Listaa arvostelut" /> 
 	        </form>
 	      </td>
 	      <td>
-	        <form method="POST" action="{{ url_for('reviews_form', game_id=game.id) }}">
-		      {% if current_user.is_authenticated %}
-		        <input type="submit" name="listReviews" value="Arvostele" /> 
-		      {% endif %}
-	        </form>
+		    {% if current_user.is_authenticated %}
+	          <form method="POST" action="{{ url_for('reviews_form', game_id=game.id) }}">
+				<input type="submit" name="listReviews" value="Arvostele" /> 
+		      </form>
+			{% endif %}	       
 	      </td>
 	      <td>
 	        <form method="POST" action="{{ url_for('games_removeOrMarkOrEdit', game_id=game.id) }}">
@@ -55,8 +60,9 @@
 	             </td>
 		       {% endif %}
 	         {% endif %}
-           </tr>
-	     {% endfor %}
+		  </td>	 
+        </tr>
+	  {% endfor %}
     </tbody>
   </table>
   

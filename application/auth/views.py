@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 from application import app, db
 from application.auth.models import User
@@ -9,6 +9,8 @@ from sqlalchemy.sql import text
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
+    if(current_user.is_authenticated):
+        return redirect(url_for("index"))
     if request.method == "GET":
         return render_template("auth/loginform.html", form = LoginForm())
 
@@ -30,6 +32,8 @@ def auth_logout():
     
 @app.route("/auth/new/")
 def auth_form():
+    if(current_user.is_authenticated):
+        return redirect(url_for("index"))
     return render_template("auth/new.html", form = RegisterForm())
 
 @app.route("/auth/<user_id>/")
@@ -38,7 +42,7 @@ def auth_profile(user_id):
     res = db.engine.execute(stmt)
     users = []
     for row in res:
-        users.append({"id":row[1], "username":row[1], "review_count":row[2]})
+        users.append({"id":row[0], "username":row[1], "review_count":row[2]})
     return render_template("auth/profile.html", users = users, reviews = Review.query.filter_by(user_id=user_id))
 
 @app.route("/auth/<user_id>/", methods=["POST"])

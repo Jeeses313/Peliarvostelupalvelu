@@ -1,43 +1,41 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  {% if current_user.admin %}
-	<a href="{{ url_for('reviews_list') }}">Kaikki arvostelut</a>
-	<a href="{{ url_for('reviews_flaggedList') }}">Asiattomiksi merkityt</a>
-  {% endif %}
+  <main role="main" class="container">
+    {% if current_user.admin %}
+	  <a href="{{ url_for('reviews_list') }}">Kaikki arvostelut</a>
+	  <a href="{{ url_for('reviews_flaggedList') }}">Asiattomiksi merkityt</a>
+    {% endif %}
+  </main>
   <table class="table">
   <thead>
     <tr>
-       <th style="width: 20%"><a href="{{ url_for('reviews_list') }}">Peli</a></th>
-       <th style="width: 20%">Arvostelija</th>
-       <th style="width: 5%"><a href="{{ url_for('reviews_listGrade') }}">Arvosana</a></th>
-       <th style="width: 20%">Arvostelu</th>
-       <th style="width: 10%"></th>
+       <th style="width: 20%">Peli<a href="{{ url_for('reviews_listReverse') }}">&#x25B2 </a><a href="{{ url_for('reviews_list') }}">&#x25BC </a></th>
+       <th style="width: 10%">Arvostelija</th>
+       <th style="width: 15%">Arvosana<a href="{{ url_for('reviews_listGradeOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('reviews_listGradeOrderAsc') }}">&#x25BC </a></th>
+       <th style="width: 25%">Arvostelu</th>
+       
      </tr>
    </thead>
    <tbody>
      {% for review in reviews %}
        <tr>
-         <td><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></td>
-         <td><a href="{{ url_for('auth_profile', user_id=review.user_id  ) }}">{{ review.user.username }}</a></td>
+         <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></div></td>
+         <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('auth_profile', user_id=review.user_id  ) }}">{{ review.user.username }}</a></div></td>
          <td>{{ review.grade }} </td>
-	     <td>{{ review.text }}</td>
+	     <td><textarea rows="5%" cols="25%" id="aboutDescription" style="resize: none;" data-role="none" readonly="true">{{ review.text }}</textarea></td>
          <td>
 	       <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
 		     {% if current_user.is_authenticated %}
 	           {% if current_user.admin %}
 		          <td>
 			        <input type="submit" name="unmark" value="Merkitse asialliseksi" />
-			      </td>
-			      <td>
 			        <input type="submit" name="remove" value="Poista" />
 	              </td>
 		        {% else %}
 		          {% if current_user.id == review.user_id %}
 			        <td>
 			          <input type="submit" name="edit" value="Muokkaa" />
-					</td>
-					<td>	
 			          <input type="submit" name="remove" value="Poista" />
 	                </td>
 			      {% else %}

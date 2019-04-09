@@ -15,18 +15,28 @@ adminin on mahdollista poistaa merkitty peli tai poistaa merkintä.
 
 Toimintoja:  
 	-Kirjautuminen  
-	-Arvostelun teko pelille  
-	-Pelin lisääminen  
-	-Pelien listaus eri ehtojen mukaan  
-	-Pelin arvosteluiden listaus  
+	-Arvostelun teko pelille
+	-Arvostelun muokkaaminen
+	-Arvosteluiden listaus
+	-Arvosteluiden listauksen järjestäminen
+	-Pelin lisääminen
+	-Pelin arvosteluiden listaus
+	-Pelien listauksen järjestäminen
 	-Tunnisteen lisäys pelille  
 	-Pelien ja arvosteluiden asiattomaksi merkitseminen  
-	-Asiattoman sisällön poistaminen (admin)  
+	-Asiattoman sisällön poistaminen (admin)
+	-Pelien tietojen muokkaaminen (admin)
+	
+	
 	
 [User storyt](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/User%20storyt.md)
 
 [Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.png)
 
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
+
+[Asennusohje](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/asennusohje.md)
+
+[Käyttöohje](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/kayttoohje.md)
 
 Admin käyttäjän käyttäjätunnus: "admin" ja salasana: "admin". Tavalliseksi käyttäjäksi voi rekisteröityä kirjautumissivulta.

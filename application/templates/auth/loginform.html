@@ -1,17 +1,21 @@
 {% extends "layout.html" %}
 
 {% block body %}
-{{ error }}
-<p><b>Kirjautuminen</b></p>
-<form method="POST" action="{{ url_for('auth_login') }}">
-  {{ form.username.label }}
-  {{ form.username }}
-  </br>
-  {{ form.password.label }}
-  {{ form.password }}
-  </br>
-  <input type="submit" value="Kirjaudu"/> tai <a href="{{ url_for('auth_form') }}">rekisteröidy</a>
-</form>
+
+<main role="main" class="container">
+	{{ error }}
+    <p><b>Kirjautuminen</b></p>
+    <form method="POST" action="{{ url_for('auth_login') }}">
+      {{ form.username.label }}
+      {{ form.username }}
+      </br>
+      {{ form.password.label }}
+      {{ form.password }}
+      </br>
+    <input type="submit" value="Kirjaudu"/> tai <a href="{{ url_for('auth_form') }}">rekisteröidy</a>
+  </form>
+</main>
+
 
 
 {% endblock %}

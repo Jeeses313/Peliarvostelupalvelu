@@ -1,27 +1,29 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('games_createOrUpdate')}}">
-  <p> Pelin tietojen muokkaus </p>
-  {{ form.oldName }}
-  {{ form.name.label}}
-  {{ form.name }}
-  {% for error in form.name.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  {{ form.tag.label }}
-  {{ form.tag }}
-  {% for error in form.tag.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  {{ form.publication.label }}
-  {{ form.publication }}
-  {% for error in form.publication.errors %}
-    {{ error }}
-  {% endfor %}
-  </br>
-  <input type="submit" name="edit" value="Muokkaa"/>
-</form>
+<main role="main" class="container">
+  <form method="POST" action="{{ url_for('games_createOrUpdate')}}">
+    <p> Pelin tietojen muokkaus </p>
+    {{ form.oldName }}
+    {{ form.name.label}}
+    {{ form.name }}
+    {% for error in form.name.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    {{ form.tag.label }}
+    {{ form.tag }}
+    {% for error in form.tag.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    {{ form.publication.label }}
+    {{ form.publication }}
+    {% for error in form.publication.errors %}
+      {{ error }}
+    {% endfor %}
+    </br>
+    <input type="submit" name="edit" value="Muokkaa"/>
+  </form>
+</main>
 {% endblock %}

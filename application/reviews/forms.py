@@ -29,7 +29,7 @@ class ReviewForm(FlaskForm):
     def validate_text(form, field):
         text = form.text.data
         if(len(text) >= 300):
-            raise ValidationError("Arvostelun pituus saa olla enintään 300 merkkiä")
+            raise ValidationError("Arvostelusi on " + str(len(text)) + " merkkiä pitkä, kun se saa olla enintään 300")
         if(len(text) < 1):
             raise ValidationError("Arvostelu ei saa olla tyhjä")
     class Meta:
@@ -54,7 +54,7 @@ class ReviewEditForm(FlaskForm):
     def validate_text(form, field):
         text = form.text.data
         if(len(text) >= 300):
-            raise ValidationError("Arvostelun pituus saa olla enintään 300 merkkiä")
+            raise ValidationError("Arvostelusi on " + str(len(text)) + " merkkiä pitkä, kun se saa olla enintään 300")
         if(len(text) < 1):
             raise ValidationError("Arvostelu ei saa olla tyhjä")
     

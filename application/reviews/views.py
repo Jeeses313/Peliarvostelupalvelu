@@ -6,7 +6,7 @@ from application.games.models import Game
 from application.reviews.forms import ReviewForm, ReviewEditForm
 from sqlalchemy import desc
 
-@app.route("/reviews/<game_id>", methods=["POST", "GET"])
+@app.route("/reviews/game/<game_id>", methods=["POST", "GET"])
 def reviews_index(game_id):
     reviews = Review.query.filter_by(game_id=game_id)
     game = Game.query.filter_by(id=game_id).first()
@@ -15,22 +15,36 @@ def reviews_index(game_id):
 @app.route("/reviews/list", methods=["GET"])
 def reviews_list():
     return render_template("reviews/listing.html", reviews = Review.query.join(Game).order_by(Game.name).all())
+    
+@app.route("/reviews/listReverse", methods=["GET"])
+def reviews_listReverse():
+    return render_template("reviews/listing.html", reviews = Review.query.join(Game).order_by(desc(Game.name)).all())
 
-@app.route("/reviews/listGrade", methods=["GET"])
-def reviews_listGrade():
+@app.route("/reviews/listGradeOrderAsc", methods=["GET"])
+def reviews_listGradeOrderAsc():
+    return render_template("reviews/listing.html", reviews = Review.query.order_by(Review.grade).all())
+
+@app.route("/reviews/listGradeOrderDesc", methods=["GET"])
+def reviews_listGradeOrderDesc():
     return render_template("reviews/listing.html", reviews = Review.query.order_by(desc(Review.grade)).all())
 
-
-@app.route("/reviews/gradeOrder/<game_id>", methods=["GET", "POST"])
-def reviews_gradeOrder(game_id):
+@app.route("/reviews/gradeOrderDesc/<game_id>", methods=["GET", "POST"])
+def reviews_gameGradeOrderDesc(game_id):
     reviews = Review.query.filter_by(game_id=game_id).order_by(desc(Review.grade))
     game = Game.query.filter_by(id=game_id).first()
     return render_template("reviews/list.html", reviews = reviews, game = game)
-    
+
+@app.route("/reviews/gradeOrderAsc/<game_id>", methods=["GET", "POST"])
+def reviews_gameGradeOrderAsc(game_id):
+    reviews = Review.query.filter_by(game_id=game_id).order_by(Review.grade)
+    game = Game.query.filter_by(id=game_id).first()
+    return render_template("reviews/list.html", reviews = reviews, game = game)    
 
 @app.route("/reviews/flagged", methods=["GET"])
 @login_required
 def reviews_flaggedList():
+    if(not current_user.admin):
+        return redirect(url_for("reviews_list"))
     return render_template("reviews/listing.html", reviews = Review.query.filter_by(flag=True))
 
 
