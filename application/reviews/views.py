@@ -14,7 +14,7 @@ def reviews_index(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY Game.name").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :users_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :games_id GROUP BY Review.id ORDER BY Game.name").params(users_id=user_id, games_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
