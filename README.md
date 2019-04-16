@@ -19,6 +19,7 @@ Toimintoja:
 	-Arvostelun muokkaaminen  
 	-Arvosteluiden listaus  
 	-Arvosteluiden listauksen järjestäminen  
+	-Arvostelusta tykkääminen  
 	-Pelin lisääminen  
 	-Pelin arvosteluiden listaus  
 	-Pelien listauksen järjestäminen  

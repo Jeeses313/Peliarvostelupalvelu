@@ -43,7 +43,18 @@ def auth_profile(user_id):
     users = []
     for row in res:
         users.append({"id":row[0], "username":row[1], "review_count":row[2]})
-    return render_template("auth/profile.html", users = users, reviews = Review.query.filter_by(user_id=user_id))
+    
+    users_id = 0
+    if(current_user.is_authenticated):
+        users_id = current_user.id
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :users_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Account.id = :user_id GROUP BY Review.id").params(users_id=users_id, user_id=user_id)
+    res = db.engine.execute(stmt)
+    reviews = []
+
+    for row in res:         
+        reviews.append({"id":row[0], "game_name":row[1], "username":row[2], "grade":row[3], "text":row[4], "like_count":row[5], "is_liked":row[6], "user_id":row[7], "game_id":row[8]})
+    
+    return render_template("auth/profile.html", users = users, reviews = reviews)
 
 @app.route("/auth/<user_id>/", methods=["POST"])
 @login_required

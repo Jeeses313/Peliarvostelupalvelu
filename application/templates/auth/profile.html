@@ -18,39 +18,64 @@
         <th style="width: 20%">Peli</th>
         <th style="width: 10%">Arvosana</th>
         <th style="width: 25%">Arvostelu</th>
+		<th style="width: 15%">Tykkäyksiä</th>
       </tr>
     </thead>
     <tbody>
 	  {% for review in reviews %}
         <tr>
-          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game.name }}</a></div></td>
+          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game_name }}</a></div></td>
           <td>{{ review.grade }}</td>
           <td><textarea rows="5%" cols="25%" id="aboutDescription" style="resize: none;" data-role="none" readonly="true">{{ review.text }}</textarea></td>
-          <td><form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}"></form></td>
+		  <td>{{ review.like_count }} </td>
 		  <td>
-            <form method="POST" action="{{ url_for('reviews_removeOrMarkOrEdit', review_id=review.id) }}">
-		      {% if current_user.is_authenticated %}
-	            {% if current_user.admin %}
-		          <td>
-			        <input type="submit" name="unmark" value="Merkitse asialliseksi" />
-			      </td>
-			      <td>
-			        <input type="submit" name="remove" value="Poista" />
-	              </td>
-		        {% else %}
-		      {% if current_user.id == review.user_id %}
-			    
-			      <input type="submit" name="edit" value="Muokkaa" />	
-                				
-			      <input type="submit" name="remove" value="Poista" />
-	            
-			  {% else %}
-			    <td>
-				  <input type="submit" name="mark" value="Merkitse asiattomaksi" /> 
-			    </td>
+		 {% if current_user.is_authenticated %}
+	       {% if current_user.admin %}
+		     <td>
+		       <form method="POST" action="{{ url_for('reviews_unmark', review_id=review.id) }}">
+			     <input type="submit" name="profile" value="Merkitse asialliseksi" />
+			   </form>
+			 </td>  
+		     <td>
+			   <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+			      <input type="submit" name="profile" value="Poista" />
+			   </form>  
+	         </td>
+		   {% else %}
+		     {% if current_user.id == review.user_id %}
+			   <td>
+				  <form method="POST" action="{{ url_for('reviews_editReview', review_id=review.id) }}">
+			        <input type="submit" name="edit" value="Muokkaa" />
+				  </form>
+			   </td>
+			   <td>
+			     <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+			       <input type="submit" name="profile" value="Poista" />
+	             </form>   
+			   </td>
+			 {% else %}
+			   {% if review.is_liked == 0 %}
+			   <td>
+			     <form method="POST" action="{{ url_for('reviews_like', review_id=review.id) }}">
+				   <input type="submit" name="profile" value="Tykkää" /> 
+				 </form>	  
+			   </td>
+			   {% else %}
+			   <td>
+			     <form method="POST" action="{{ url_for('reviews_unlike', review_id=review.id) }}">
+				   <input type="submit" name="profile" value="Poista tykkäys" /> 
+				 </form>	  
+			   </td>
+			   {% endif %}
+			   <td>
+			     <form method="POST" action="{{ url_for('reviews_mark', review_id=review.id) }}">
+				   <input type="submit" name="profile" value="Merkitse asiattomaksi" /> 
+				 </form>	  
+			   </td>
 			  {% endif %}
-	        {% endif %}
+		    {% endif %}
 	      {% endif %}
+		  </td>  
         </tr>
 	  {% endfor %}	
     </tbody>

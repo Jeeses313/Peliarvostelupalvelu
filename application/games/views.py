@@ -4,6 +4,7 @@ import datetime
 from flask import redirect, render_template, request, url_for
 from application.games.models import Game
 from application.reviews.models import Review
+from application.likes.models import Like
 from application.games.forms import GameForm, GameEditForm
 from sqlalchemy.sql import text
 import os
@@ -26,6 +27,8 @@ def games_index():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
     
@@ -47,6 +50,8 @@ def games_indexReverse():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -68,6 +73,8 @@ def games_publicationOrder():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -89,6 +96,8 @@ def games_publicationOrderReverse():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -111,6 +120,8 @@ def games_reviewAverageOrderDesc():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -132,6 +143,8 @@ def games_reviewAverageOrderAsc():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -153,6 +166,8 @@ def games_reviewCountOrderDesc():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -174,6 +189,8 @@ def games_reviewCountOrderAsc():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -196,6 +213,8 @@ def games_tagOrder():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -217,6 +236,8 @@ def games_tagOrderReverse():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -246,6 +267,8 @@ def games_flaggedList():
         average = str(row[5])
         if("None" in average):
             average = "0"
+        else:
+            average = "{0:.2f}".format(float(average))
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
 
@@ -258,6 +281,9 @@ def games_removeOrMarkOrEdit(game_id):
     elif('remove' in request.form):
         reviews = Review.query.filter_by(game_id=game.id)
         for review in reviews:
+            likes = Like.query.filter_by(review_id=review.id)
+            for like in likes:
+                db.session().delete(like)
             db.session().delete(review)
         db.session().delete(game)
     elif('edit' in request.form):

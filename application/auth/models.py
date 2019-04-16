@@ -8,6 +8,7 @@ class User(db.Model):
     password = db.Column(db.String(50), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
     reviews = db.relationship("Review", backref='user', lazy=True)
+    likes = db.relationship("Like", backref='user', lazy=True)
 
     def __init__(self, username, password, admin):
         self.username = username

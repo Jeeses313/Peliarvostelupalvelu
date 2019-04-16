@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
         exists = User.query.filter_by(username=username).first()
         if(not (exists is None)):
             raise ValidationError("Käyttäjänimi varattu")
-        if(len(username) >= 50):
+        if(len(username) > 50):
             raise ValidationError("Käyttäjänimen pituus oli " + str(len(username)) + " merkkiä, kun se saa olla enintään 50")
        
     def validate_passwordSec(form, field):
@@ -29,7 +29,7 @@ class RegisterForm(FlaskForm):
         passwordSec = form.passwordSec.data
         if(not (password == passwordSec)):
             raise ValidationError("Kirjoita sama salasana molempiin kohtiin")
-        if(len(password) >= 50):
+        if(len(password) > 50):
             raise ValidationError("Salasanan pituus oli " + str(len(password)) + " merkkiä, kun se saa olla enintään 50")
 
     class Meta:
@@ -49,7 +49,7 @@ class UserEditForm(FlaskForm):
         if(not (exists is None)):
             if(not (username == oldUsername)):
                 raise ValidationError("Käyttäjänimi varattu")
-        if(len(username) >= 50):
+        if(len(username) > 50):
             raise ValidationError("Käyttäjänimen pituus oli " + str(len(username)) + " merkkiä, kun se saa olla enintään 50")
             
     def validate_passwordSec(form, field):
@@ -57,7 +57,7 @@ class UserEditForm(FlaskForm):
         passwordSec = form.passwordSec.data
         if(not (password == passwordSec)):
             raise ValidationError("Kirjoita sama salasana molempiin kohtiin")
-        if(len(password) >= 50):
+        if(len(password) > 50):
             raise ValidationError("Salasanan pituus oli " + str(len(password)) + " merkkiä, kun se saa olla enintään 50")
     
     class Meta:

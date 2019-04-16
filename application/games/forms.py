@@ -13,12 +13,12 @@ class GameForm(FlaskForm):
         exists = Game.query.filter_by(name=name).first()
         if(not (exists is None)):
             raise ValidationError("Peli on jo tietokannassa")
-        if(len(name) >= 150):
+        if(len(name) > 150):
             raise ValidationError("Nimen pituus oli " + str(len(name)) + " merkkiä, kun se saa olla enintään 150")
     
     def validate_tag(form, field):
         tag = form.tag.data
-        if(len(tag) >= 150):
+        if(len(tag) > 150):
             raise ValidationError("Tunnisteen pituus oli " + str(len(tag)) + " merkkiä, kun se saa olla enintään 150")
         
     def validate_publication(form, field):
@@ -43,12 +43,12 @@ class GameEditForm(FlaskForm):
         if(not (exists is None)):
             if(not (name == oldName)):
                 raise ValidationError("Peli on jo tietokannassa")
-        if(len(name) >= 150):
+        if(len(name) > 150):
             raise ValidationError("Nimen pituus oli " + str(len(name)) + " merkkiä, kun se saa olla enintään 150")
             
     def validate_tag(form, field):
         tag = form.tag.data
-        if(len(tag) >= 150):
+        if(len(tag) > 150):
             raise ValidationError("Tunnisteen pituus oli " + str(len(tag)) + " merkkiä, kun se saa olla enintään 150")
 
     

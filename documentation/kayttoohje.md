@@ -98,6 +98,8 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 * Muiden arvosteluiden vieressä nappi *Merkitse asiattomaksi*, joka merkitsee arvostelun niin, että admin tietää, että siinä on jotain asiatonta
 
+* Muiden arvosteluiden vieressä nappi *Tykkää* tai *Poista tykkäys*, joka lisää/poistaa tykkäykseni arvostelulle
+
 ##### Adminina
 
 * Klikkaamalla *Kaikki arvostelut*, listataan kaikki arvostelut

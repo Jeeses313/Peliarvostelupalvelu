@@ -18,7 +18,11 @@ Käyttäjänä voin muokata ja poistaa arvostelujani.
 
 Käyttäjänä voin nähdä omat ja muiden tekemät arvostelut.
 
-Käyttäjänä voin nähdä peliin liittyvät arvostelut ja järjestää ne arvosanan mukaan.
+Käyttäjänä voin tykätä arvostelusta
+
+Käyttäjänä voin poistaa tykkäykseni arvostelusta
+
+Käyttäjänä voin nähdä peliin liittyvät arvostelut ja järjestää ne arvosanan tai tykkäysten mukaan.
 
 Käyttäjänä voin merkitä asiattoman sisällön ja pelit, joiden tiedot ovat virheellisiä.
 

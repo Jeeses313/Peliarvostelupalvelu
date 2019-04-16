@@ -12,9 +12,9 @@
 
 2. Pura paketti haluamaasi paikkaan
 
-3. Paikallisen version asennus on valmis. Lisää ohjeita [käyttoohjeista](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/kayttoohje.md)
+3. Paikallisen version asennus on valmis. Lisää ohjeita [käyttöohjeista](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/kayttoohje.md)
 
 4. Githubiin ja Herokuun siirtämisen ohjeet [täältä](https://materiaalit.github.io/tsoha-19/osa1/) kohdasta 3.4. ja tietokannan tekemiseen ohjeet [täältä](https://materiaalit.github.io/tsoha-19/osa3/) kohdasta 4.
 
-5. Herokussa olevan version asennus on valmis. Lisää ohjeita [käyttoohjeista](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/kayttoohje.md)
+5. Herokussa olevan version asennus on valmis. Lisää ohjeita [käyttöohjeista](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/kayttoohje.md)
 
