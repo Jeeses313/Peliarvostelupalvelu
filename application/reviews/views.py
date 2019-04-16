@@ -14,7 +14,7 @@ def reviews_index(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY Game.name").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name").params(user_id=user_id, game_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -28,7 +28,7 @@ def reviews_list():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY Game.name").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -41,7 +41,7 @@ def reviews_listReverse():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY Game.name DESC").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name DESC").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -55,7 +55,7 @@ def reviews_listGradeOrderAsc():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY Review.grade").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Review.grade").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -69,7 +69,7 @@ def reviews_listGradeOrderDesc():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY Review.grade DESC").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Review.grade DESC").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -83,7 +83,7 @@ def reviews_listLikeOrderAsc():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY like_count").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY like_count").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -97,7 +97,7 @@ def reviews_listLikeOrderDesc():
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id GROUP BY Review.id ORDER BY like_count DESC").params(user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY like_count DESC").params(user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -112,7 +112,7 @@ def reviews_gameGradeOrderDesc(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY Review.grade DESC").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Review.grade DESC").params(user_id=user_id, game_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -127,7 +127,7 @@ def reviews_gameGradeOrderAsc(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY Review.grade").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Review.grade").params(user_id=user_id, game_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -142,7 +142,7 @@ def reviews_gameLikeOrderDesc(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY like_count DESC").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY like_count DESC").params(user_id=user_id, game_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -157,7 +157,7 @@ def reviews_gameLikeOrderAsc(game_id):
     user_id = 0
     if(current_user.is_authenticated):
         user_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Game.id = :game_id GROUP BY Review.id ORDER BY like_count").params(user_id=user_id, game_id=game_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY like_count").params(user_id=user_id, game_id=game_id)
     res = db.engine.execute(stmt)
     reviews = []
 
@@ -176,9 +176,9 @@ def reviews_flaggedList():
     if(current_user.is_authenticated):
         user_id = current_user.id
     if os.environ.get("HEROKU"):
-        stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Review.flag = True GROUP BY Review.id ORDER BY Game.name").params(user_id=user_id)
+        stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Review.flag = True GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name").params(user_id=user_id)
     else: 
-        stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Like.id) AS like_count, SUM(CASE Like.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Like ON Review.id = Like.review_id WHERE Review.flag = 1 GROUP BY Review.id ORDER BY Game.name").params(user_id=user_id)
+        stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Review.flag = 1 GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name").params(user_id=user_id)
     
     
     res = db.engine.execute(stmt)
