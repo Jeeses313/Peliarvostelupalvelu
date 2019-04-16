@@ -10,7 +10,7 @@ class Review(db.Model):
     grade = db.Column(db.Integer, nullable=False)
     text = db.Column(db.String(300), nullable=False)
     flag = db.Column(db.Boolean, nullable=False)
-    likes = db.relationship("liking", backref='review', lazy=True)
+    likes = db.relationship("Like", backref='review', lazy=True)
 
     
     def __init__(self, game_id, grade, text):
