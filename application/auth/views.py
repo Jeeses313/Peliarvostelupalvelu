@@ -47,7 +47,7 @@ def auth_profile(user_id):
     users_id = 0
     if(current_user.is_authenticated):
         users_id = current_user.id
-    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Likes.id) AS like_count, SUM(CASE Likes.user_id WHEN :users_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Likes ON Review.id = Likes.review_id WHERE Account.id = :user_id GROUP BY Review.id").params(users_id=users_id, user_id=user_id)
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :users_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Account.id = :user_id GROUP BY Review.id").params(users_id=users_id, user_id=user_id)
     res = db.engine.execute(stmt)
     reviews = []
 
