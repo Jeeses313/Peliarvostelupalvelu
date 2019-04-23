@@ -34,7 +34,7 @@ Toimintoja:
 
 [Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.png)
 
-[Tietorakenteen kuvaus](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/tietorakenteenkuvaus.md)
+[Tietokantarakenteen kuvaus](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/tietokantarakenteenkuvaus.md)
 
 [Rajoitteet, puutuvat ominaisuudet ja jatkokehitys ideat](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/puutteet.md)
 
