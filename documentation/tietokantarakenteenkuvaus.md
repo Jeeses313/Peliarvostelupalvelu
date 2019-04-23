@@ -10,7 +10,7 @@ SQL-kyselyt ovat ohjelman koodissa käytettyjen kyselyiden mukaisia, minkä taki
 
 Käyttäjä  
 ```
-  CREATE TABLE Account (  
+CREATE TABLE Account (  
   id INTEGER PRIMARY KEY,  
   username VARCHAR(50),  
   password VARCHAR(50),  

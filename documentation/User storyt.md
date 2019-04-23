@@ -79,5 +79,5 @@ SELECT Review.id, Game.name, Account.username, Review.grade, Review.text,
 COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id  
 FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id  
 LEFT JOIN Liking ON Review.id = Liking.review_id  
-WHERE Review.flag = True GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name
+WHERE Review.flag = True GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Game.name;
 ```  
