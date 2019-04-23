@@ -19,9 +19,10 @@
         <th style="width: 10%">Arvosana</th>
         <th style="width: 25%">Arvostelu</th>
 		<th style="width: 15%">Tykkäyksiä</th>
+		<th style="width: 30%"><input style="width: 80%" class="form-control" id="myInput" type="text" placeholder="Search.."></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
 	  {% for review in reviews %}
         <tr>
           <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game_name }}</a></div></td>
@@ -29,55 +30,51 @@
           <td><textarea rows="5%" cols="25%" id="aboutDescription" style="resize: none;" data-role="none" readonly="true">{{ review.text }}</textarea></td>
 		  <td>{{ review.like_count }} </td>
 		  <td>
-		 {% if current_user.is_authenticated %}
-	       {% if current_user.admin %}
-		     <td>
-		       <form method="POST" action="{{ url_for('reviews_unmark', review_id=review.id) }}">
-			     <input type="submit" name="profile" value="Merkitse asialliseksi" />
-			   </form>
-			 </td>  
-		     <td>
-			   <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+		    {% if current_user.is_authenticated %}
+	          {% if current_user.admin %}
+		        <form style="display:inline" method="POST" action="{{ url_for('reviews_unmark', review_id=review.id) }}">
+			      <input type="submit" name="profile" value="Merkitse asialliseksi" />
+			    </form>
+			    <form style="display:inline" method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
 			      <input type="submit" name="profile" value="Poista" />
-			   </form>  
-	         </td>
-		   {% else %}
-		     {% if current_user.id == review.user_id %}
-			   <td>
-				  <form method="POST" action="{{ url_for('reviews_editReview', review_id=review.id) }}">
+			    </form>  
+		      {% else %}
+		        {% if current_user.id == review.user_id %}
+				  <form style="display:inline" method="POST" action="{{ url_for('reviews_editReview', review_id=review.id) }}">
 			        <input type="submit" name="edit" value="Muokkaa" />
 				  </form>
-			   </td>
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
-			       <input type="submit" name="profile" value="Poista" />
-	             </form>   
-			   </td>
-			 {% else %}
-			   {% if review.is_liked == 0 %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_like', review_id=review.id) }}">
-				   <input type="submit" name="profile" value="Tykkää" /> 
-				 </form>	  
-			   </td>
-			   {% else %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_unlike', review_id=review.id) }}">
-				   <input type="submit" name="profile" value="Poista tykkäys" /> 
-				 </form>	  
-			   </td>
-			   {% endif %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_mark', review_id=review.id) }}">
-				   <input type="submit" name="profile" value="Merkitse asiattomaksi" /> 
-				 </form>	  
-			   </td>
-			  {% endif %}
-		    {% endif %}
-	      {% endif %}
+			      <form style="display:inline" method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+			        <input type="submit" name="profile" value="Poista" />
+	              </form>   
+			    {% else %}
+			      {% if review.is_liked == 0 %}
+			        <form style="display:inline" method="POST" action="{{ url_for('reviews_like', review_id=review.id) }}">
+				     <input type="submit" name="profile" value="Tykkää" /> 
+				    </form>	  
+			      {% else %}
+			        <form style="display:inline" method="POST" action="{{ url_for('reviews_unlike', review_id=review.id) }}">
+				      <input type="submit" name="profile" value="Poista tykkäys" /> 
+				    </form>	  
+			      {% endif %}
+			      <form style="display:inline" method="POST" action="{{ url_for('reviews_mark', review_id=review.id) }}">
+				    <input type="submit" name="profile" value="Merkitse asiattomaksi" /> 
+				  </form>	  
+			    {% endif %}
+		      {% endif %}
+	        {% endif %}
 		  </td>  
         </tr>
 	  {% endfor %}	
     </tbody>
   </table>
+  <script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
 {% endblock %}

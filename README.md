@@ -34,6 +34,10 @@ Toimintoja:
 
 [Tietokantakaavio](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/Peliarvostelupalvelu%20tietokantakaavio.png)
 
+[Tietorakenteen kuvaus](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/tietorakenteenkuvaus.md)
+
+[Rajoitteet, puutuvat ominaisuudet ja jatkokehitys ideat](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/puutteet.md)
+
 [Sovellus Herokussa](https://peliarvostelupalvelu.herokuapp.com/)
 
 [Asennusohje](https://github.com/Jeeses313/Peliarvostelupalvelu/blob/master/documentation/asennusohje.md)

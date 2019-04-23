@@ -4,17 +4,34 @@
 
   <main role="main" class="container">			  
     <p>Arvostelut pelille {{ game.name }} </p> 
+	<p>
+	  {% if current_user.is_authenticated %}
+	    <form style="display:inline" method="POST" action="{{ url_for('reviews_form', game_id=game.id) }}">
+		  <input type="submit" name="listReviews" value="Arvostele" /> 
+          </form>
+	  {% endif %}	       
+      <form style="display:inline" method="POST" action="{{ url_for('games_removeOrMarkOrEdit', game_id=game.id) }}">
+	    {% if current_user.is_authenticated %}
+          {% if current_user.admin %}         
+		    <input type="submit" name="edit" value="Muokkaa" />      
+			<input type="submit" name="remove" value="Poista" />      
+		  {% else %}    
+			<input type="submit" name="mark" value="Merkitse virheelliseksi" />      
+		  {% endif %}
+	   {% endif %}
+	</p>	 
   </main>
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 10%">Arvostelija</th>
+        <th style="width: 15%">Arvostelija</th>
         <th style="width: 10%">Arvosana<a href="{{ url_for('reviews_gameGradeOrderDesc', game_id=game.id  ) }}">&#x25B2 </a><a href="{{ url_for('reviews_gameGradeOrderAsc', game_id=game.id  ) }}">&#x25BC </a></th>
         <th style="width: 20%">Arvostelu</th>
-		<th style="width: 15%">Tykkäyksiä<a href="{{ url_for('reviews_gameLikeOrderDesc', game_id=game.id  ) }}">&#x25B2 </a><a href="{{ url_for('reviews_gameLikeOrderAsc', game_id=game.id  ) }}">&#x25BC </a></th>
-      </tr>
+		<th style="width: 10%">Tykkäyksiä<a href="{{ url_for('reviews_gameLikeOrderDesc', game_id=game.id  ) }}">&#x25B2 </a><a href="{{ url_for('reviews_gameLikeOrderAsc', game_id=game.id  ) }}">&#x25BC </a></th>
+        <th style="width: 30%"><input style="width: 80%" class="form-control" id="myInput" type="text" placeholder="Search.."></th>
+	  </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
 	  {% for review in reviews %}
         <tr>
           <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('auth_profile', user_id=review.user_id  ) }}">{{ review.username }}</a></div></td>
@@ -22,55 +39,53 @@
           <td><textarea rows="5%" cols="25%" id="aboutDescription" style="resize: none;" data-role="none" readonly="true">{{ review.text }}</textarea></td>
           <td>{{ review.like_count }} </td>
 		  <td>
-		 {% if current_user.is_authenticated %}
-	       {% if current_user.admin %}
-		     <td>
-		       <form method="POST" action="{{ url_for('reviews_unmark', review_id=review.id) }}">
+			<form method="POST" action="{{ url_for('reviews_index', game_id=game.id) }}">
+	        </form>
+		    {% if current_user.is_authenticated %}
+	         {% if current_user.admin %} 
+		       <form style="display:inline" method="POST" action="{{ url_for('reviews_unmark', review_id=review.id) }}">
 			     <input type="submit" name="list" value="Merkitse asialliseksi" />
 			   </form>
-			 </td>  
-		     <td>
-			   <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
-			      <input type="submit" name="list" value="Poista" />
+			   <form style="display:inline" method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+			     <input type="submit" name="list" value="Poista" />
 			   </form>  
-	         </td>
-		   {% else %}
-		     {% if current_user.id == review.user_id %}
-			   <td>
-				  <form method="POST" action="{{ url_for('reviews_editReview', review_id=review.id) }}">
-			        <input type="submit" name="edit" value="Muokkaa" />
-				  </form>
-			   </td>
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
+		     {% else %}
+		       {% if current_user.id == review.user_id %}
+			     <form style="display:inline" method="POST" action="{{ url_for('reviews_editReview', review_id=review.id) }}">
+			       <input type="submit" name="edit" value="Muokkaa" />
+				 </form>
+			     <form style="display:inline" method="POST" action="{{ url_for('reviews_remove', review_id=review.id) }}">
 			       <input type="submit" name="list" value="Poista" />
 	             </form>   
-			   </td>
-			 {% else %}
-			   {% if review.is_liked == 0 %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_like', review_id=review.id) }}">
-				   <input type="submit" name="list" value="Tykkää" /> 
-				 </form>	  
-			   </td>
-			   {% else %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_unlike', review_id=review.id) }}">
-				   <input type="submit" name="list" value="Poista tykkäys" /> 
-				 </form>	  
-			   </td>
-			   {% endif %}
-			   <td>
-			     <form method="POST" action="{{ url_for('reviews_mark', review_id=review.id) }}">
-				   <input type="submit" name="list" value="Merkitse asiattomaksi" /> 
-				 </form>	  
-			   </td>
+			  {% else %}
+			    {% if review.is_liked == 0 %}
+			      <form style="display:inline" method="POST" action="{{ url_for('reviews_like', review_id=review.id) }}">
+				    <input type="submit" name="list" value="Tykkää" /> 
+				  </form>	  
+			    {% else %}
+			      <form style="display:inline" method="POST" action="{{ url_for('reviews_unlike', review_id=review.id) }}">
+				    <input type="submit" name="list" value="Poista tykkäys" /> 
+				  </form>	  
+			    {% endif %}
+			    <form style="display:inline" method="POST" action="{{ url_for('reviews_mark', review_id=review.id) }}">
+				  <input type="submit" name="list" value="Merkitse asiattomaksi" /> 
+			   	</form>	  
 			  {% endif %}
 		    {% endif %}
 	      {% endif %}
-		  </td>  
-        </tr>
-	  {% endfor %}
-    </tbody>
-  </table>
+	    </td>  
+      </tr>
+	{% endfor %}
+  </tbody>
+</table>
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
 {% endblock %}

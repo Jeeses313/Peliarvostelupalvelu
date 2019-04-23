@@ -54,6 +54,8 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 * Voit järjestää listaa eri tavoin klikkaamalla nuolia sarakkeiden otsikoiden vieressä
 
+* Otsikoiden vieressä on hakupalkki, johon kirjoittamalla voi hakea riviä, joka sisältää kirjoitetun tekstin
+
 * Klikkaamalla *Listaa arvostelut* pelin tietojen vieressä, ohjaudut sivulle, josta näet listan kyseiseen peliin liityvistä arvosteluista
 
 ##### Kirjautuneena
@@ -88,6 +90,8 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 * Voit järjestää listaa eri tavoin klikkaamalla nuolia sarakkeiden otsikoiden vieressä
 
+* Otsikoiden vieressä on hakupalkki, johon kirjoittamalla voi hakea riviä, joka sisältää kirjoitetun tekstin
+
 * Klikkaamalla pelin nimeä, ohjaudut sivulle, josta näet kyseiseen peliin liittyvät arvostelut
 
 * Klikkaamalla käyttäjän nimeä, ohjaudut kyseisen käyttäjän profiilisivulle
@@ -110,7 +114,7 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 #### Peliin liittyvien arvosteluiden listaa
 
-* Samoja toimintoja kuin arvostelulistassa
+* Samoja toimintoja kuin arvostelulistassa ja pelilistassa
 
 #### Käyttäjän profiili sivu
 
