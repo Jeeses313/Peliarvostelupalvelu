@@ -50,6 +50,35 @@ def reviews_listReverse():
     
     return render_template("reviews/listing.html", reviews = reviews)
 
+@app.route("/reviews/listUserOrderAsc", methods=["GET"])
+def reviews_listUserOrderAsc():
+    user_id = 0
+    if(current_user.is_authenticated):
+        user_id = current_user.id
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Account.username").params(user_id=user_id)
+    res = db.engine.execute(stmt)
+    reviews = []
+
+    for row in res:         
+        reviews.append({"id":row[0], "game_name":row[1], "username":row[2], "grade":row[3], "text":row[4], "like_count":row[5], "is_liked":row[6], "user_id":row[7], "game_id":row[8]})
+    
+    return render_template("reviews/listing.html", reviews = reviews)
+
+@app.route("/reviews/listUserOrderDesc", methods=["GET"])
+def reviews_listUserOrderDesc():
+    user_id = 0
+    if(current_user.is_authenticated):
+        user_id = current_user.id
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Account.username DESC").params(user_id=user_id)
+    res = db.engine.execute(stmt)
+    reviews = []
+
+    for row in res:         
+        reviews.append({"id":row[0], "game_name":row[1], "username":row[2], "grade":row[3], "text":row[4], "like_count":row[5], "is_liked":row[6], "user_id":row[7], "game_id":row[8]})
+    
+    return render_template("reviews/listing.html", reviews = reviews)
+
+
 @app.route("/reviews/listGradeOrderAsc", methods=["GET"])
 def reviews_listGradeOrderAsc():
     user_id = 0
@@ -166,6 +195,37 @@ def reviews_gameLikeOrderAsc(game_id):
     
     game = Game.query.filter_by(id=game_id).first()
     return render_template("reviews/list.html", reviews = reviews, game = game)  
+
+@app.route("/reviews/userOrderDesc/<game_id>", methods=["GET", "POST"])
+def reviews_gameUserOrderDesc(game_id):
+    user_id = 0
+    if(current_user.is_authenticated):
+        user_id = current_user.id
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Account.username DESC").params(user_id=user_id, game_id=game_id)
+    res = db.engine.execute(stmt)
+    reviews = []
+
+    for row in res:         
+        reviews.append({"id":row[0], "game_name":row[1], "username":row[2], "grade":row[3], "text":row[4], "like_count":row[5], "is_liked":row[6], "user_id":row[7]})
+    
+    game = Game.query.filter_by(id=game_id).first()
+    return render_template("reviews/list.html", reviews = reviews, game = game)
+
+@app.route("/reviews/userOrderAsc/<game_id>", methods=["GET", "POST"])
+def reviews_gameUserOrderAsc(game_id):
+    user_id = 0
+    if(current_user.is_authenticated):
+        user_id = current_user.id
+    stmt = text("SELECT Review.id, Game.name, Account.username, Review.grade, Review.text, COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN :user_id THEN 1 ELSE 0 END) AS is_liked, Account.id FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id LEFT JOIN Liking ON Review.id = Liking.review_id WHERE Game.id = :game_id GROUP BY Review.id, Game.name, Account.username, Account.id, Game.id ORDER BY Account.username").params(user_id=user_id, game_id=game_id)
+    res = db.engine.execute(stmt)
+    reviews = []
+
+    for row in res:         
+        reviews.append({"id":row[0], "game_name":row[1], "username":row[2], "grade":row[3], "text":row[4], "like_count":row[5], "is_liked":row[6], "user_id":row[7]})
+    
+    game = Game.query.filter_by(id=game_id).first()
+    return render_template("reviews/list.html", reviews = reviews, game = game)  
+
 
 @app.route("/reviews/flagged", methods=["GET"])
 @login_required

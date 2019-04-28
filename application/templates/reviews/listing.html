@@ -11,7 +11,7 @@
   <thead>
     <tr>
        <th style="width: 15%">Peli<a href="{{ url_for('reviews_listReverse') }}">&#x25B2 </a><a href="{{ url_for('reviews_list') }}">&#x25BC </a></th>
-       <th style="width: 15%">Arvostelija</th>
+       <th style="width: 15%">Arvostelija<a href="{{ url_for('reviews_listUserOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('reviews_listUserOrderAsc') }}">&#x25BC </a></th>
        <th style="width: 10%">Arvosana<a href="{{ url_for('reviews_listGradeOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('reviews_listGradeOrderAsc') }}">&#x25BC </a></th>
        <th style="width: 20%">Arvostelu</th>
 	   <th style="width: 10%">Tykkäyksiä<a href="{{ url_for('reviews_listLikeOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('reviews_listLikeOrderAsc') }}">&#x25BC </a></th>

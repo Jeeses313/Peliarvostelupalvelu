@@ -40,7 +40,7 @@ SELECT Review.id, Game.name, Account.username, Review.grade, Review.text,
 COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN ? THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id  
 FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id  
 LEFT JOIN Liking ON Review.id = Liking.review_id  
-GROUP BY Review.id ORDER BY Game.name/Review.grade/like_count (DESC)
+GROUP BY Review.id ORDER BY Game.name/Review.grade/like_count/Account.username (DESC)
 ```
 
 Käyttäjänä voin tykätä arvostelusta.  
@@ -49,13 +49,13 @@ Käyttäjänä voin tykätä arvostelusta.
 Käyttäjänä voin poistaa tykkäykseni arvostelusta.  
 `DELETE FROM Liking WHERE user_id = ? AND review_id = ?`
 
-Käyttäjänä voin nähdä peliin liittyvät arvostelut ja järjestää ne arvosanan tai tykkäysten mukaan.  
+Käyttäjänä voin nähdä peliin liittyvät arvostelut järjestettynä eri tavoin.  
 ```
 SELECT Review.id, Game.name, Account.username, Review.grade, Review.text,  
 COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN ? THEN 1 ELSE 0 END) AS is_liked, Account.id  
 FROM Review LEFT JOIN Game ON Review.game_id = Game.id LEFT JOIN Account ON Review.user_id = Account.id  
 LEFT JOIN Liking ON Review.id = Liking.review_id  
-WHERE Game.id = ? GROUP BY Review.id ORDER BY Game.name/Review.grade/like_count (DESC)
+WHERE Game.id = ? GROUP BY Review.id ORDER BY Game.name/Review.grade/like_count/Account.username (DESC)
 ```
 
 Käyttäjänä voin merkitä asiattoman sisällön ja pelit, joiden tiedot ovat virheellisiä.  

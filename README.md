@@ -23,7 +23,6 @@ Toimintoja:
 	-Pelin lisääminen  
 	-Pelin arvosteluiden listaus  
 	-Pelien listauksen järjestäminen  
-	-Tunnisteen lisäys pelille  
 	-Pelien ja arvosteluiden asiattomaksi merkitseminen   
 	-Asiattoman sisällön poistaminen (admin)  
 	-Pelien tietojen muokkaaminen (admin)  
