@@ -13,7 +13,7 @@ tyyppistä peliä. Esim. yksinpeli, moninpeli, FPS yms.
 Käyttäjät voivat myös merkitä pelejä ja arvosteluita asiattomiksi, jolloin
 adminin on mahdollista poistaa merkitty peli tai poistaa merkintä.
 
-Esimerkki toimintoja:  
+Esimerkkitoimintoja:  
 	-Kirjautuminen  
 	-Arvostelun teko pelille  
 	-Arvostelun muokkaaminen  
