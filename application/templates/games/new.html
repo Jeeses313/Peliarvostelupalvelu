@@ -2,27 +2,42 @@
   
 {% block body %}
 <main role="main" class="container">
+  <p> Uuden pelin lisäys </p>
   <form method="POST" action="{{ url_for('games_createOrUpdate') }}">
-    <p> Uuden pelin lisäys </p>
-    <tr>
-    {{ form.name.label}}
-    {{ form.name }}
-    {% for error in form.name.errors %}
-      {{ error }}
-    {% endfor %}
-    </br>
-    {{ form.tag.label }}
-    {{ form.tag }}
-    {% for error in form.tag.errors %}
-      {{ error }}
-    {% endfor %}
-    </br>
-    {{ form.publication.label }}
-    {{ form.publication }}
-    {% for error in form.publication.errors %}
-      {{ error }}
-    {% endfor %}
-    </br>
+    <table>
+      <tr>
+        <td style="width: 25%">
+	      {{ form.name.label}}
+        </td>
+	    <td>
+	      {{ form.name }}
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        </td>
+	  <tr>
+	    <td style="width: 25%">
+          {{ form.tag.label }}
+	    </td>
+	    <td>
+          {{ form.tag }}
+          {% for error in form.tag.errors %}
+            {{ error }}
+          {% endfor %}
+	    </td>
+      </tr>
+  	  <tr>
+	    <td style="width: 25%"> 
+          {{ form.publication.label }}
+	    </td>
+	    <td>
+          {{ form.publication }}
+          {% for error in form.publication.errors %}
+            {{ error }}
+          {% endfor %}
+	    </td>	
+      </tr>
+	</table>
     <input type="submit" name="create" value="Lisää peli"/>
   </form>
 </main>

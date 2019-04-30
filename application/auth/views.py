@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from application import app, db
 from application.auth.models import User
 from application.reviews.models import Review
+from application.likes.models import Like
 from application.auth.forms import LoginForm, RegisterForm, UserEditForm
 from sqlalchemy.sql import text
 
@@ -41,9 +42,12 @@ def auth_profile(user_id):
     stmt = text("SELECT Account.id, Account.username, COUNT(Review.id) FROM Account LEFT JOIN Review ON Account.id = Review.user_id WHERE Account.id = :user_id GROUP BY Account.id").params(user_id=user_id)
     res = db.engine.execute(stmt)
     users = []
+    isUser = 0
     for row in res:
         users.append({"id":row[0], "username":row[1], "review_count":row[2]})
-    
+        isUser+=1
+    if(isUser == 0):
+        return render_template("index.html")
     users_id = 0
     if(current_user.is_authenticated):
         users_id = current_user.id
@@ -68,6 +72,30 @@ def auth_edit(user_id):
     form.passwordSec.data = user.password
     return render_template("auth/edit.html", form = form, user = user) 
 
+@app.route("/auth/<user_id>/delete", methods=["POST"])
+@login_required
+def auth_delete(user_id):
+    if(not current_user.admin):
+        if(int(user_id) != int(current_user.id)):
+            return render_template("index.html")
+    if(not not current_user.admin):
+        if(int(user_id) == int(current_user.id)):
+            return render_template("index.html")
+    if(not current_user.admin):
+        logout_user()
+    user = User.query.get(user_id)
+    likes = Like.query.filter_by(user_id=user.id)
+    for like in likes:
+        db.session().delete(like)
+    reviews = Review.query.filter_by(user_id=user.id)
+    for review in reviews:
+        likes = Like.query.filter_by(review_id=review.id)
+        for like in likes:
+            db.session().delete(like)
+        db.session().delete(review)
+    db.session().delete(user)
+    db.session().commit()
+    return render_template("index.html")
 
    
 @app.route("/auth/", methods=["POST"])

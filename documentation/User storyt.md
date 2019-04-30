@@ -9,7 +9,10 @@ Käyttäjänä voin kirjautua sisään ja ulos.
 `SELECT * FROM Account WHERE name = ? AND password = ?`
 
 Käyttäjänä voin vaihtaa nimeni ja salasanani.  
-`UPDATE Account SET name = ?, password = ? WHERE VALUES name = ? AND password = ?`
+`UPDATE Account SET name = ?, password = ? WHERE VALUES id = ?`
+
+Käyttäjänä voin poistaa tilini.  
+`DELETE FROM Account WHERE id = ?`
 
 Käyttäjänä voin nähdä profiilini ja muidenkin profiilit.  
 `SELECT * FROM Account WHERE id = ?`
@@ -21,7 +24,7 @@ Käyttäjänä voin lisätä pelin tietokantaan, jos sitä ei jo siellä ole.
 `SELECT * FROM Game WHERE name = ?`  
 `INSERT INTO Game (name, tag, publication, flag) VALUES (?, ?, ?, False)`
 
-Käyttäjänä voin saada listan peleistä järjestettynä nimen, tunnisteen, julkaisupäivän tai arvostelun mukaan.  
+Käyttäjänä voin saada listan peleistä järjestettynä nimen, tunnisteen, julkaisupäivän tai arvosteluiden määrän mukaan.  
 ```
 SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average  
 FROM Game LEFT JOIN Review ON Game.id = Review.game_id  
@@ -32,7 +35,11 @@ Käyttäjänä voin tehdä arvostelun pelille, jolle en ole jo tehnyt arvostelua
 `INSERT INTO Review (user_id, game_id, grade, text, flag) VALUES (?, ?, ?, ?, False)`
 
 Käyttäjänä voin muokata ja poistaa arvostelujani.  
-`DELETE FROM Review WHERE user_id = ? AND game_id = ?`
+```
+UPDATE Review SET grade = ?, text = ? WHERE VALUES id = ?;  
+
+DELETE FROM Review WHERE id = ?;  
+```
 
 Käyttäjänä voin nähdä omat ja muiden tekemät arvostelut järjestettynä eri tavoin.  
 ```
@@ -63,8 +70,11 @@ Käyttäjänä voin merkitä asiattoman sisällön ja pelit, joiden tiedot ovat 
 `UPDATE Review SET flag = True WHERE VALUES user_id = ? AND game_id = ?`
 
 Adminina voin poistaa asiatonta sisältöä.  
-`DELETE FROM Game WHERE name = ?`  
-`DELETE FROM Review WHERE user_id = ? AND game_id = ?`
+`DELETE FROM Game WHERE id = ?`  
+`DELETE FROM Review WHERE id = ?`
+
+Adminina voin poistaa muiden käyttäjien tilejä.  
+`DELETE FROM Account WHERE id = ?`
 
 Adminina voin muuttaa pelien tietoja.  
 `UPDATE Game SET name = ?, tag = ?, publication = ?, flag = False WHERE VALUES name = ?`

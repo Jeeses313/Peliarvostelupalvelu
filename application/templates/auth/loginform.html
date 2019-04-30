@@ -3,15 +3,27 @@
 {% block body %}
 
 <main role="main" class="container">
-	{{ error }}
-    <p><b>Kirjautuminen</b></p>
-    <form method="POST" action="{{ url_for('auth_login') }}">
-      {{ form.username.label }}
-      {{ form.username }}
-      </br>
-      {{ form.password.label }}
-      {{ form.password }}
-      </br>
+  
+  <p><b>Kirjautuminen</b> </p>
+  <form method="POST" action="{{ url_for('auth_login') }}">
+	<table>
+      <tr>
+        <td style="width: 5%">
+          {{ form.username.label }}
+        </td>
+		<td>
+          {{ form.username }} {{ error }}
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 5%">
+          {{ form.password.label }}
+	    </td>
+	    <td>
+          {{ form.password }}
+        </td>
+      </tr>
+    </table>
     <input type="submit" value="Kirjaudu"/> tai <a href="{{ url_for('auth_form') }}">rekisteröidy</a>
   </form>
 </main>

@@ -2,25 +2,41 @@
   
 {% block body %}
 <main role="main" class="container">
+  <p> Käyttäjän tietojen muokkaus </p>
   <form method="POST" action="{{ url_for('auth_registerOrUpdate')}}">
-    <p> Käyttäjän tietojen muokkaus </p>
-    {{ form.oldUsername }}
-    {{ form.username.label}}
-    {{ form.username }}
-    {% for error in form.username.errors %}
-      {{ error }}
-    {% endfor %}
-    </br>
-    {{ form.password.label }}
-    {{ form.password }}
-
-    </br>
-    {{ form.passwordSec.label }}
-    {{ form.passwordSec }}
-    {% for error in form.passwordSec.errors %}
-      {{ error }}
-    {% endfor %}
-    </br>
+    <table>
+	  <tr>
+        <td style="width: 20%">
+          {{ form.oldUsername }}
+		  {{ form.username.label}}
+		</td>
+		<td>  
+          {{ form.username }}
+          {% for error in form.username.errors %}
+            {{ error }}
+          {% endfor %}
+	    </td>
+      </tr>		
+      <tr>
+	    <td style="width: 20%">
+          {{ form.password.label }}
+		</td>
+        <td>		
+          {{ form.password }}
+        </td>
+	  </tr>	
+      <tr>
+	    <td style="width: 20%">
+          {{ form.passwordSec.label }}
+		</td>
+        <td>		
+          {{ form.passwordSec }}
+          {% for error in form.passwordSec.errors %}
+            {{ error }}
+          {% endfor %}
+		</td>
+      </tr>  		
+    </table>  
     <input type="submit" name="edit" value="Muokkaa"/>
   </form>
 </main>

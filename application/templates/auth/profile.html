@@ -5,10 +5,19 @@
     <p>Käyttäjänimi: {{ users[0].username }} </br>Arvosteluja: {{ users[0].review_count }} </p>
 	{% if current_user.id==users[0].id  %}
 		{% if current_user.username!="admin" %} 
-			<form method="POST" action="{{ url_for('auth_edit', user_id=users[0].id) }}">
+			<form style="display:inline" method="POST" action="{{ url_for('auth_edit', user_id=users[0].id) }}">
 				<input type="submit" name="edit" value="Muokkaa tietoja" />
 			</form>
+			<form style="display:inline" method="POST" action="{{ url_for('auth_delete', user_id=users[0].id) }}">
+				<input type="submit" name="edit" value="Poista tili" />
+			</form>
 		{% endif %}
+	{% else %}
+		{% if current_user.username=="admin" %}
+			<form method="POST" action="{{ url_for('auth_delete', user_id=users[0].id) }}">
+				<input type="submit" name="edit" value="Poista tili" />
+			</form>
+	    {% endif %} 
 	{% endif %}
 	<p>Arvostelut:</p>  
   </main>

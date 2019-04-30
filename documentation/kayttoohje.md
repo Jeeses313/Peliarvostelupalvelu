@@ -123,3 +123,9 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 ##### Käyttäjänä
 
 * Omalla profiilisivulla omien tietojen alla on nappi *Muokkaa tietoja*, joka ohjaa tietojen muokkaussivulle
+
+* Omalla profiilisivulla omien tietojen alla on nappi *Poista tili*, joka poistaa kaikki käyttäjään liittyvät tiedot ja kirjautuu ulos
+
+##### Adminina
+
+* Muiden käyttäjien profiilisivuilla tietojen alla on nappi *Poista tili*, joka poistaa kaikki käyttäjään liittyvät tiedot
