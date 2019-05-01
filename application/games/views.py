@@ -10,8 +10,9 @@ from sqlalchemy.sql import text
 import os
 
 @app.route("/games", methods=["GET"])
-def games_index():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.name")
+def games_index(stmt = None):
+    if(stmt is None):
+        stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.name")
     res = db.engine.execute(stmt)
     games = []
 
@@ -35,211 +36,49 @@ def games_index():
 @app.route("/gamesReverse", methods=["GET"])
 def games_indexReverse():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.name DESC")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/publicationOrder", methods=["GET"])
 def games_publicationOrder():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.publication")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/publicationOrderReverse", methods=["GET"])
 def games_publicationOrderReverse():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.publication DESC")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 
 @app.route("/games/reviewAverageOrderDesc", methods=["GET"])
 def games_reviewAverageOrderDesc():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_average DESC")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/reviewAverageOrderAsc", methods=["GET"])
 def games_reviewAverageOrderAsc():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_average")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/reviewCountOrderDesc", methods=["GET"])
 def games_reviewCountOrderDesc():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_count DESC")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/reviewCountOrderAsc", methods=["GET"])
 def games_reviewCountOrderAsc():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_count")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 
 @app.route("/games/tagOrder", methods=["GET"])
 def games_tagOrder():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.tag")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/tagOrderReverse", methods=["GET"])
 def games_tagOrderReverse():
     stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.tag DESC")
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 
 @app.route("/games/flagged", methods=["GET"])
@@ -252,25 +91,7 @@ def games_flaggedList():
         stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = True GROUP BY Game.id ORDER BY Game.name")
     else:
         stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average, Game.flag FROM Game LEFT JOIN Review ON Game.id = Review.game_id WHERE Game.flag = 1 GROUP BY Game.id ORDER BY Game.name")   
-    res = db.engine.execute(stmt)
-    games = []
-
-    for row in res:
-        publication_date = ""
-        publication = ""
-        try:          
-            publication_date = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f')
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        except:
-            publication_date = row[3]
-            publication = "{}.{}.{}".format(publication_date.day, publication_date.month, publication_date.year)
-        average = str(row[5])
-        if("None" in average):
-            average = "0"
-        else:
-            average = "{0:.2f}".format(float(average))
-        games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
-    return render_template("games/list.html", games = games)
+    return games_index(stmt = stmt)
 
 @app.route("/games/<game_id>/", methods=["POST"])
 @login_required
@@ -279,6 +100,8 @@ def games_removeOrMarkOrEdit(game_id):
     if('mark' in request.form):
         game.flag = True
     elif('remove' in request.form):
+        if(not current_user.admin):
+            return redirect(url_for("games_index"))
         reviews = Review.query.filter_by(game_id=game.id)
         for review in reviews:
             likes = Like.query.filter_by(review_id=review.id)
@@ -295,7 +118,7 @@ def games_removeOrMarkOrEdit(game_id):
         return render_template("games/edit.html", form = form, game = game)
     db.session().commit()
   
-    return redirect(url_for("games_index"))
+    return 
 
 @app.route("/games/edit/")
 @login_required

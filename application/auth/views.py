@@ -27,6 +27,7 @@ def auth_login():
     return redirect(url_for("index"))    
     
 @app.route("/auth/logout")
+@login_required
 def auth_logout():
     logout_user()
     return redirect(url_for("index")) 
