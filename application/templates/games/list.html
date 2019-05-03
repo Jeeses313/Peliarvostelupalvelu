@@ -26,8 +26,8 @@
     <tbody >
 	  {% for game in games %}
         <tr height="80">
-          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute; height: 5">{{ game.name }}</div></td>
-          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute; height: 5">{{ game.tag }}</div></td>
+          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute; display: inline;">{{ game.name }}</div></td>
+          <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute; display: inline;">{{ game.tag }}</div></td>
           <td>{{ game.publication }}</td>
           <td>{{ game.review_count }}</td>
           <td>{{ game.review_average }}</td>
