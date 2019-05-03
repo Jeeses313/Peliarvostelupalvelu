@@ -21,17 +21,17 @@
 	{% endif %}
 	<p>Arvostelut:</p>  
   </main>
-  <table class="table">
+  <table class="table" id="myTable">
     <thead>
       <tr>
         <th style="width: 20%">Peli</th>
         <th style="width: 10%">Arvosana</th>
         <th style="width: 25%">Arvostelu</th>
 		<th style="width: 15%">Tykkäyksiä</th>
-		<th style="width: 30%"><input style="width: 80%" class="form-control" id="myInput" type="text" placeholder="Search.."></th>
+		<th style="width: 30%"></th>
       </tr>
     </thead>
-    <tbody id="myTable">
+    <tbody>
 	  {% for review in reviews %}
         <tr>
           <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;"><a href="{{ url_for('reviews_index', game_id=review.game_id  ) }}">{{ review.game_name }}</a></div></td>
@@ -77,13 +77,8 @@
     </tbody>
   </table>
   <script>
-    $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
+    $(document).ready( function () {
+      $('#myTable').DataTable({scrollY: 380});
+    } );
   </script>
 {% endblock %}

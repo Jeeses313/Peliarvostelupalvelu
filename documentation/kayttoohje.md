@@ -52,7 +52,7 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 ##### Kaikille
 
-* Voit järjestää listaa eri tavoin klikkaamalla nuolia sarakkeiden otsikoiden vieressä
+* Voit järjestää listaa eri tavoin klikkaamalla sarakkeiden otsikoita
 
 * Otsikoiden vieressä on hakupalkki, johon kirjoittamalla voi hakea riviä, joka sisältää kirjoitetun tekstin
 
@@ -88,7 +88,7 @@ Huomio! Admin voi tehdä suurimman osan asioista, joita tavallisena kirjautuneen
 
 ##### Kaikille 
 
-* Voit järjestää listaa eri tavoin klikkaamalla nuolia sarakkeiden otsikoiden vieressä
+* Voit järjestää listaa eri tavoin klikkaamalla sarakkeiden otsikoita
 
 * Otsikoiden vieressä on hakupalkki, johon kirjoittamalla voi hakea riviä, joka sisältää kirjoitetun tekstin
 

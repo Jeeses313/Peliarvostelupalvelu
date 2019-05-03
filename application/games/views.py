@@ -33,54 +33,6 @@ def games_index(stmt = None):
         games.append({"id":row[0], "name":row[1], "tag":row[2], "publication":publication, "review_count":row[4], "review_average":average})
     return render_template("games/list.html", games = games)
     
-@app.route("/gamesReverse", methods=["GET"])
-def games_indexReverse():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.name DESC")
-    return games_index(stmt = stmt)
-
-@app.route("/games/publicationOrder", methods=["GET"])
-def games_publicationOrder():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.publication")
-    return games_index(stmt = stmt)
-
-@app.route("/games/publicationOrderReverse", methods=["GET"])
-def games_publicationOrderReverse():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.publication DESC")
-    return games_index(stmt = stmt)
-
-
-@app.route("/games/reviewAverageOrderDesc", methods=["GET"])
-def games_reviewAverageOrderDesc():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_average DESC")
-    return games_index(stmt = stmt)
-
-@app.route("/games/reviewAverageOrderAsc", methods=["GET"])
-def games_reviewAverageOrderAsc():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_average")
-    return games_index(stmt = stmt)
-
-@app.route("/games/reviewCountOrderDesc", methods=["GET"])
-def games_reviewCountOrderDesc():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_count DESC")
-    return games_index(stmt = stmt)
-
-@app.route("/games/reviewCountOrderAsc", methods=["GET"])
-def games_reviewCountOrderAsc():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY review_count")
-    return games_index(stmt = stmt)
-
-
-@app.route("/games/tagOrder", methods=["GET"])
-def games_tagOrder():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.tag")
-    return games_index(stmt = stmt)
-
-@app.route("/games/tagOrderReverse", methods=["GET"])
-def games_tagOrderReverse():
-    stmt = text("SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average FROM Game LEFT JOIN Review ON Game.id = Review.game_id GROUP BY Game.id ORDER BY Game.tag DESC")
-    return games_index(stmt = stmt)
-
-
 @app.route("/games/flagged", methods=["GET"])
 @login_required
 def games_flaggedList():
@@ -118,7 +70,7 @@ def games_removeOrMarkOrEdit(game_id):
         return render_template("games/edit.html", form = form, game = game)
     db.session().commit()
   
-    return 
+    return redirect(url_for("games_index"))
 
 @app.route("/games/edit/")
 @login_required

@@ -4,10 +4,6 @@
 
 - Peleille voi antaa vain yhden tunnisteen, eli tunnisteilla pitäisi olla oma taulu ja monesta moneen yhteys pelien ja tunnisteiden välille. Tällöin tunnisteita voisi myös lisätä pelin lisäämisen jälkeenkin.
 
-- Käyttäjätilejä ei voi poistaa.
-
-- Kaikki listattavat pelit/arvostelut tulevat samalle sivulle.
-
 - Virheeliseksi ja asiattomaksi merkitseminen ei tee mitään ilmoitusta käyttäjälle.
 
 - Listausten napit ohjaavat sivulle, jossa lista on oletusjärjetyksessä, vaikka lista olisi nappia painaessa järjestettynä eri tavalla.

@@ -12,18 +12,18 @@
 	{% endif %}
   </main>
   
-  <table class="table">
+  <table class="table" id="myTable">
     <thead>
       <tr>
-        <th style="width: 10%">Nimi<a href="{{ url_for('games_indexReverse') }}">&#x25B2 </a><a href="{{ url_for('games_index') }}">&#x25BC </a></th>
-        <th style="width: 10%">Tunnus<a href="{{ url_for('games_tagOrderReverse') }}">&#x25B2 </a><a href="{{ url_for('games_tagOrder') }}">&#x25BC </a></th>
-        <th style="width: 15%">Julkaisupäivä<a href="{{ url_for('games_publicationOrderReverse') }}">&#x25B2 </a><a href="{{ url_for('games_publicationOrder') }}">&#x25BC </a></th>
-        <th style="width: 10%">Arvosteluja<a href="{{ url_for('games_reviewCountOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('games_reviewCountOrderAsc') }}">&#x25BC </a></th>
-        <th style="width: 10%">Arvosteluiden keskiarvo<a href="{{ url_for('games_reviewAverageOrderDesc') }}">&#x25B2 </a><a href="{{ url_for('games_reviewAverageOrderAsc') }}">&#x25BC </a></th>
-		<th style="width: 30%"><input style="width: 80%" class="form-control" id="myInput" type="text" placeholder="Search.."></th>
+        <th style="width: 10%">Nimi</th>
+        <th style="width: 10%">Tunnus</th>
+        <th style="width: 15%">Julkaisupäivä</th>
+        <th style="width: 10%">Arvosteluja</th>
+        <th style="width: 10%">Arvosteluiden keskiarvo</th>
+		<th style="width: 30%"></th>
 	  </tr>
     </thead>
-    <tbody id="myTable">
+    <tbody >
 	  {% for game in games %}
         <tr>
           <td style="position:relative"><div style="width: 90%; overflow: auto; position: absolute;">{{ game.name }}</div></td>
@@ -57,14 +57,9 @@
     </tbody>
   </table>
   <script>
-    $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
+    $(document).ready( function () {
+      $('#myTable').DataTable({scrollY: 470});
+    } );
   </script>
   
 {% endblock %}

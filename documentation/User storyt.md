@@ -24,7 +24,7 @@ Käyttäjänä voin lisätä pelin tietokantaan, jos sitä ei jo siellä ole.
 `SELECT * FROM Game WHERE name = ?`  
 `INSERT INTO Game (name, tag, publication, flag) VALUES (?, ?, ?, False)`
 
-Käyttäjänä voin saada listan peleistä järjestettynä nimen, tunnisteen, julkaisupäivän tai arvosteluiden määrän mukaan.  
+Käyttäjänä voin saada listan peleistä järjestettynä nimen, tunnisteen, julkaisupäivän tai arvosteluiden määrän mukaan. (DataTableen siirtymisen takia järjestämistä ei tarvitse hoitaa kyselyssä.)
 ```
 SELECT Game.id, Game.name, Game.tag, Game.publication, COUNT(Review.id) AS review_count, AVG(Review.grade) AS review_average  
 FROM Game LEFT JOIN Review ON Game.id = Review.game_id  
@@ -41,7 +41,7 @@ UPDATE Review SET grade = ?, text = ? WHERE VALUES id = ?;
 DELETE FROM Review WHERE id = ?;  
 ```
 
-Käyttäjänä voin nähdä omat ja muiden tekemät arvostelut järjestettynä eri tavoin.  
+Käyttäjänä voin nähdä omat ja muiden tekemät arvostelut järjestettynä eri tavoin. (DataTableen siirtymisen takia järjestämistä ei tarvitse hoitaa kyselyssä.)
 ```
 SELECT Review.id, Game.name, Account.username, Review.grade, Review.text,  
 COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN ? THEN 1 ELSE 0 END) AS is_liked, Account.id, Game.id  
@@ -56,7 +56,7 @@ Käyttäjänä voin tykätä arvostelusta.
 Käyttäjänä voin poistaa tykkäykseni arvostelusta.  
 `DELETE FROM Liking WHERE user_id = ? AND review_id = ?`
 
-Käyttäjänä voin nähdä peliin liittyvät arvostelut järjestettynä eri tavoin.  
+Käyttäjänä voin nähdä peliin liittyvät arvostelut järjestettynä eri tavoin. (DataTableen siirtymisen takia järjestämistä ei tarvitse hoitaa kyselyssä.)
 ```
 SELECT Review.id, Game.name, Account.username, Review.grade, Review.text,  
 COUNT(Liking.id) AS like_count, SUM(CASE Liking.user_id WHEN ? THEN 1 ELSE 0 END) AS is_liked, Account.id  
